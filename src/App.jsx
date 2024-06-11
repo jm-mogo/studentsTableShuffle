@@ -1,35 +1,72 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
+import data from "./data.json";
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [newStudentNameInput, setNewStudentInput] = useState("");
+    const [students, setStudents] = useState(data);
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    const addStudent = () => {
+        const newStudentsList = [];
+        newStudentsList.push(...students);
+        const newStudent = {};
+        newStudent.name = newStudentNameInput;
+        newStudentsList.unshift(newStudent);
+        console.log(newStudentsList);
+        setStudents(newStudentsList);
+        setNewStudentInput("");
+    };
+
+    const deleteStudent = (student) => {
+        let newStudentsList = [];
+        newStudentsList.push(...students);
+        console.log(student);
+        newStudentsList = newStudentsList.filter((s) => s.name !== student);
+        setStudents(newStudentsList);
+    };
+
+    return (
+        <div>
+            <div style={{ display: "flex", gap: "20px" }}>
+                <label htmlFor="newStudent">Add new student</label>
+                <input
+                    onChange={(e) => {
+                        setNewStudentInput(e.target.value);
+                    }}
+                    type="text"
+                    name="newStudent"
+                    id="newStudent"
+                    value={newStudentNameInput}
+                />
+                <button
+                    type="button"
+                    style={{ backgroundColor: "white", color: "black" }}
+                    onClick={addStudent}
+                >
+                    Add
+                </button>
+            </div>
+            <ul>
+                {students.map((item) => (
+                    <>
+                        <li
+                            key={item.id}
+                            style={{ display: "flex", gap: "10px" }}
+                        >
+                            {item.name}
+                            <button
+                                onClick={() => {
+                                    deleteStudent(item.name);
+                                }}
+                            >
+                                delete
+                            </button>
+                        </li>
+                    </>
+                ))}
+            </ul>
+        </div>
+    );
 }
 
-export default App
+export default App;
