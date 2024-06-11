@@ -24,13 +24,14 @@ function Shuffle({ students }) {
 
     const shuffleStudents = () => {
         let counter = 0;
-        let amountOfStudents = students.length;
+        let amountOfStudents = Students.length;
         let studentsPerTable = Math.ceil(amountOfStudents / ammountOfTables);
-        students = shuffle(students);
+        shuffle(Students);
+        shuffle(Supervisors);
         let newTable = [];
         let newTables = [];
         for (let i = 0; i < amountOfStudents; i++) {
-            newTable.push(students[i]);
+            newTable.push(Students[i]);
             counter++;
             if (counter == studentsPerTable) {
                 counter = 0;
@@ -40,6 +41,16 @@ function Shuffle({ students }) {
             if (i == amountOfStudents - 1 && newTable.length > 0) {
                 newTables.push(newTable);
             }
+        }
+        newTable = [];
+        let i = 0;
+        while (Supervisors.length > 0) {
+            newTables[i].push(Supervisors.shift());
+
+            if (i > ammountOfTables) {
+                i = 0;
+            }
+            i++;
         }
         setTables(newTables);
     };
@@ -60,7 +71,18 @@ function Shuffle({ students }) {
                     <ol style={{ margin: "20px" }}>
                         table {i + 1}
                         {table.map((student) => (
-                            <li>{student.name}</li>
+                            <>
+                                {student.role == "supervisor" ? (
+                                    <li>
+                                        {student.name}{" "}
+                                        <b style={{ color: "red" }}>
+                                            Supervisor
+                                        </b>
+                                    </li>
+                                ) : (
+                                    <li>{student.name}</li>
+                                )}
+                            </>
                         ))}
                     </ol>
                 ))}
