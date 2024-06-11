@@ -1,17 +1,11 @@
 import { useState } from "react";
+import addStudent from "./addStudent.jsx";
 
-function Students({ students, setStudents }) {
+function StudentsList({ students, setStudents, studentRole }) {
     const [newStudentNameInput, setNewStudentInput] = useState("");
-
-    const addStudent = () => {
-        let newStudentsList = [];
-        newStudentsList.push(...students);
-        const newStudent = {};
-        newStudent.name = newStudentNameInput;
-        newStudent.role = "student";
-        newStudentsList.unshift(newStudent);
-        console.log(newStudentsList);
-        setStudents(newStudentsList);
+    let count = 0;
+    const addNewStudent = () => {
+        addStudent(students, newStudentNameInput, studentRole, setStudents);
         setNewStudentInput("");
     };
 
@@ -58,17 +52,24 @@ function Students({ students, setStudents }) {
                 <button
                     type="button"
                     style={{ backgroundColor: "white", color: "black" }}
-                    onClick={addStudent}
+                    onClick={addNewStudent}
                 >
                     Add
                 </button>
             </div>
+            <h1>
+                {students.map((item) => {
+                    item.role == studentRole ? count++ : count;
+                })}
+                There are {count} {studentRole}s
+            </h1>
+
             <ul>
                 {students.map((item, i) => (
                     <>
-                        {item.role == "student" && (
+                        {item.role == studentRole && (
                             <li
-                                key={item.id}
+                                key={i}
                                 style={{ display: "flex", gap: "10px" }}
                             >
                                 {item.edit ? (
@@ -104,4 +105,4 @@ function Students({ students, setStudents }) {
     );
 }
 
-export default Students;
+export default StudentsList;

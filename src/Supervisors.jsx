@@ -1,17 +1,11 @@
 import { useState } from "react";
+import addStudent from "./addStudent";
 
 function Supervisors({ students, setStudents }) {
     const [newStudentNameInput, setNewStudentInput] = useState("");
 
-    const addStudent = () => {
-        const newStudentsList = [];
-        newStudentsList.push(...students);
-        const newStudent = {};
-        newStudent.name = newStudentNameInput;
-        newStudent.role = "supervisor";
-        newStudentsList.unshift(newStudent);
-        console.log(newStudentsList);
-        setStudents(newStudentsList);
+    const addNewStudent = () => {
+        addStudent(students, newStudentNameInput, "supervisor", setStudents);
         setNewStudentInput("");
     };
 
@@ -58,7 +52,7 @@ function Supervisors({ students, setStudents }) {
                 <button
                     type="button"
                     style={{ backgroundColor: "white", color: "black" }}
-                    onClick={addStudent}
+                    onClick={addNewStudent}
                 >
                     Add
                 </button>
@@ -68,7 +62,7 @@ function Supervisors({ students, setStudents }) {
                     <>
                         {item.role == "supervisor" && (
                             <li
-                                key={item.id}
+                                key={i}
                                 style={{ display: "flex", gap: "10px" }}
                             >
                                 {item.edit ? (
