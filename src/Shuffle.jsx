@@ -54,7 +54,7 @@ function Shuffle({ students }) {
 
     return (
         <>
-            <div>
+            <div style={{ display: "flex", gap: "10px" }}>
                 <label htmlFor="">Ammount of tables</label>
                 <input
                     type="number"
