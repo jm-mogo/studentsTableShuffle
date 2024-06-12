@@ -23,37 +23,35 @@ function Shuffle({ students }) {
     };
 
     const shuffleStudents = () => {
-        let counter = 0;
-        let amountOfStudents = Students.length;
-        let studentsPerTable = Math.ceil(amountOfStudents / ammountOfTables);
         shuffle(Students);
         shuffle(Supervisors);
-        let newTable = [];
         let newTables = [];
-        for (let i = 0; i < amountOfStudents; i++) {
-            newTable.push(Students[i]);
-            counter++;
-            if (counter == studentsPerTable) {
-                counter = 0;
-                newTables.push(newTable);
-                newTable = [];
-            }
-            if (i == amountOfStudents - 1 && newTable.length > 0) {
-                newTables.push(newTable);
+        for (let i = 0; i < ammountOfTables; i++) {
+            newTables.push([]);
+        }
+        let i = 0;
+        while (Students.length > 0) {
+            newTables[i].push(Students.shift());
+
+            if (i >= newTables.length - 1) {
+                i = 0;
+            } else {
+                i++;
             }
         }
-        newTable = [];
-        let i = 0;
+        i = 0;
         while (Supervisors.length > 0) {
             newTables[i].push(Supervisors.shift());
 
-            if (i > ammountOfTables) {
+            if (i >= newTables.length - 1) {
                 i = 0;
+            } else {
+                i++;
             }
-            i++;
         }
         setTables(newTables);
     };
+
     return (
         <>
             <div>
