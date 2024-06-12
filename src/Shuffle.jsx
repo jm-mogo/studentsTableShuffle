@@ -52,6 +52,19 @@ function Shuffle({ students }) {
         setTables(newTables);
     };
 
+    const moveStudent = (studentTable, studentIndex) => {
+        let newTables = [...tables];
+        let tableToMove = Number(prompt("Choose table to move to: "));
+        if (tableToMove > 12 || tableToMove < 1) {
+            alert("invalid table");
+            return;
+        }
+        let newStudent = newTables[studentTable].splice(studentIndex, 1);
+        console.log(newStudent);
+        newTables[tableToMove - 1].unshift(...newStudent);
+        setTables(newTables);
+    };
+
     return (
         <>
             <div style={{ display: "flex", gap: "10px" }}>
@@ -68,7 +81,7 @@ function Shuffle({ students }) {
                 {tables.map((table, i) => (
                     <ol style={{ margin: "20px" }}>
                         table {i + 1}
-                        {table.map((student) => (
+                        {table.map((student, j) => (
                             <>
                                 {student.role == "supervisor" ? (
                                     <li>
@@ -78,7 +91,17 @@ function Shuffle({ students }) {
                                         </b>
                                     </li>
                                 ) : (
-                                    <li>{student.name}</li>
+                                    <li>
+                                        {" "}
+                                        {student.name}{" "}
+                                        <button
+                                            onClick={(e) => {
+                                                moveStudent(i, j);
+                                            }}
+                                        >
+                                            move
+                                        </button>
+                                    </li>
                                 )}
                             </>
                         ))}
