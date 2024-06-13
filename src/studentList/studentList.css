@@ -1,13 +1,15 @@
 table {
     width: 80vw;
-    max-width:400px;
+    max-width:600px;
     margin: auto;
     text-align: left;
+    border-spacing: 0;
 }
 
 td {
     padding: 10px;
 }
+
 
 tr:nth-child(even) {background-color: #f2f2f2;}
 
