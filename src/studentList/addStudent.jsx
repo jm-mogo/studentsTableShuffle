@@ -1,4 +1,4 @@
-function addStudent(studentsList, newStudentName, newStudentRole, setStudents) {
+function addStudent(studentsList, setStudents, newStudentName, newStudentRole) {
     let newStudentsList = [];
     newStudentsList.push(...studentsList);
     const newStudent = {};

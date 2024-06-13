@@ -1,4 +1,4 @@
-import StudentsList from "./StudentsList.jsx";
+import StudentsList from "./studentList/StudentsList.jsx";
 // import Supervisors from "./Supervisors.jsx";
 import { useState } from "react";
 import data from "./data.json";

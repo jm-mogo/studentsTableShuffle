@@ -77,7 +77,7 @@ function Shuffle({ students }) {
                 <button onClick={shuffleStudents}>Shuffle</button>
             </div>
 
-            <ul>
+            <>
                 {tables.map((table, i) => (
                     <ol style={{ margin: "20px" }}>
                         table {i + 1}
@@ -107,7 +107,7 @@ function Shuffle({ students }) {
                         ))}
                     </ol>
                 ))}
-            </ul>
+            </>
         </>
     );
 }
