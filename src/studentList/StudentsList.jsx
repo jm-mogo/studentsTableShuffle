@@ -2,7 +2,7 @@ import { useState } from "react";
 import addStudent from "./addStudent.jsx";
 import deleteStudent from "./deleteStudent.jsx";
 import updateName from "./updateName.jsx";
-import editStudent from "../editStudent.jsx";
+import editStudent from "./editStudent.jsx";
 
 function StudentsList({ students, setStudents, studentRole }) {
     const [newStudentNameInput, setNewStudentInput] = useState("");
