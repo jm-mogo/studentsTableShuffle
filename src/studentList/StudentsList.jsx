@@ -1,7 +1,8 @@
 import { useState } from "react";
 import addStudent from "./addStudent.jsx";
 import deleteStudent from "./deleteStudent.jsx";
-// import "./studentList.css";
+import updateName from "./updateName.jsx";
+import editStudent from "../editStudent.jsx";
 
 function StudentsList({ students, setStudents, studentRole }) {
     const [newStudentNameInput, setNewStudentInput] = useState("");
@@ -13,25 +14,6 @@ function StudentsList({ students, setStudents, studentRole }) {
     const addNewStudent = () => {
         addStudent(students, setStudents, newStudentNameInput, studentRole);
         setNewStudentInput("");
-    };
-
-    const editStudent = (studentName) => {
-        let newStudentsList = [];
-        newStudentsList.push(...students);
-        newStudentsList.map((student) => {
-            if (student.name == studentName) {
-                student.edit ? (student.edit = false) : (student.edit = true);
-            }
-        });
-        setStudents(newStudentsList);
-    };
-
-    const updateName = (e) => {
-        let index = e.target.id;
-        let newStudentsList = [];
-        newStudentsList.push(...students);
-        newStudentsList[index].name = e.target.value;
-        setStudents(newStudentsList);
     };
 
     return (
@@ -56,48 +38,64 @@ function StudentsList({ students, setStudents, studentRole }) {
             </h1>
 
             <table>
-                <tr>
-                    <th>Name</th>
-                    <th>Controls</th>
-                </tr>
-                {students.map((item, i) => (
-                    <>
-                        {item.role == studentRole && (
-                            <tr>
-                                <td>
-                                    {item.edit ? (
-                                        <input
-                                            id={i}
-                                            type="text"
-                                            value={item.name}
-                                            onChange={updateName}
-                                        />
-                                    ) : (
-                                        item.name
-                                    )}
-                                </td>
-                                <td className="tdButtons">
-                                    <button
-                                        className="deleteBtn"
-                                        onClick={() => {
-                                            deleteStudent(
-                                                students,
-                                                setStudents,
-                                                item.name
-                                            );
-                                        }}
-                                    ></button>
-                                    <button
-                                        className="editBtn"
-                                        onClick={() => {
-                                            editStudent(item.name);
-                                        }}
-                                    ></button>
-                                </td>
-                            </tr>
-                        )}
-                    </>
-                ))}
+                <tbody>
+                    <tr>
+                        <th>Name</th>
+                        <th>Controls</th>
+                    </tr>
+                    {students.map((item, i) => (
+                        <>
+                            {item.role == studentRole && (
+                                <tr>
+                                    <td>
+                                        {item.edit ? (
+                                            <input
+                                                id={i}
+                                                type="text"
+                                                value={item.name}
+                                                onChange={(e) => {
+                                                    updateName(
+                                                        e,
+                                                        students,
+                                                        setStudents
+                                                    );
+                                                }}
+                                            />
+                                        ) : (
+                                            item.name
+                                        )}
+                                    </td>
+                                    <td className="tdButtons">
+                                        <button
+                                            className="deleteBtn"
+                                            onClick={() => {
+                                                deleteStudent(
+                                                    students,
+                                                    setStudents,
+                                                    item.name
+                                                );
+                                            }}
+                                        ></button>
+                                        <button
+                                            className={
+                                                item.edit
+                                                    ? "updateBtn"
+                                                    : "editBtn"
+                                            }
+                                            onClick={() => {
+                                                editStudent(
+                                                    item.name,
+                                                    students,
+                                                    setStudents
+                                                );
+                                            }}
+                                        ></button>
+                                    </td>
+                                </tr>
+                            )}
+                        </>
+                    ))}
+                </tbody>
             </table>
         </div>
     );

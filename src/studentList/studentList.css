@@ -28,8 +28,13 @@ tr:nth-child(even) {background-color: #f2f2f2;}
     background: url("../icons/pen.png") ;
 }
 
+.updateBtn {
+    background: url("../icons/check.png") ;
+}
+
 .deleteBtn,
-.editBtn {
+.editBtn,
+.updateBtn {
     border: none;
     cursor: pointer;
     width: 20px;
