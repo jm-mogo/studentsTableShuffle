@@ -74,58 +74,78 @@ function StudentsList({ students, setStudents }) {
                         <th>Name</th>
                         <th>Controls</th>
                     </tr>
-                    {students.map((item, i) => (
-                        <>
-                            {item.role == studentRole && (
-                                <tr>
-                                    <td>
-                                        {item.edit ? (
-                                            <input
-                                                id={i}
-                                                type="text"
-                                                value={item.name}
-                                                onChange={(e) => {
-                                                    updateName(
-                                                        e,
+                    {students.map((item, i) => {
+                        return (
+                            <>
+                                {item.role == studentRole && (
+                                    <tr>
+                                        <td>
+                                            {item.edit ? (
+                                                <>
+                                                    <div className="updateStudent">
+                                                        <input
+                                                            id={i}
+                                                            type="text"
+                                                            value={item.name}
+                                                            onChange={(e) => {
+                                                                updateName(
+                                                                    e,
+                                                                    students,
+                                                                    setStudents
+                                                                );
+                                                            }}
+                                                        />
+                                                        <label htmlFor="role">
+                                                            Role:
+                                                        </label>
+                                                        <select
+                                                            name="role"
+                                                            id="role"
+                                                        >
+                                                            <option value="student">
+                                                                Student
+                                                            </option>
+                                                            <option value="supervisor">
+                                                                Supervisor
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </>
+                                            ) : (
+                                                item.name
+                                            )}
+                                        </td>
+                                        <td className="tdButtons">
+                                            <button
+                                                className="deleteBtn"
+                                                onClick={() => {
+                                                    deleteStudent(
+                                                        students,
+                                                        setStudents,
+                                                        item.name
+                                                    );
+                                                }}
+                                            ></button>
+                                            <button
+                                                className={
+                                                    item.edit
+                                                        ? "updateBtn"
+                                                        : "editBtn"
+                                                }
+                                                onClick={() => {
+                                                    editStudent(
+                                                        item.name,
                                                         students,
                                                         setStudents
                                                     );
                                                 }}
-                                            />
-                                        ) : (
-                                            item.name
-                                        )}
-                                    </td>
-                                    <td className="tdButtons">
-                                        <button
-                                            className="deleteBtn"
-                                            onClick={() => {
-                                                deleteStudent(
-                                                    students,
-                                                    setStudents,
-                                                    item.name
-                                                );
-                                            }}
-                                        ></button>
-                                        <button
-                                            className={
-                                                item.edit
-                                                    ? "updateBtn"
-                                                    : "editBtn"
-                                            }
-                                            onClick={() => {
-                                                editStudent(
-                                                    item.name,
-                                                    students,
-                                                    setStudents
-                                                );
-                                            }}
-                                        ></button>
-                                    </td>
-                                </tr>
-                            )}
-                        </>
-                    ))}
+                                            ></button>
+                                        </td>
+                                    </tr>
+                                )}
+                            </>
+                        );
+                    })}
                 </tbody>
             </table>
         </div>

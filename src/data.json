@@ -1,4 +1,5 @@
 [
+    { "name": "Alberto Gonzales", "role": "supervisor", "gender": "M" },
     { "name": "Michael Jones", "role": "student", "gender": "M" },
     { "name": "Emily Smith", "role": "student", "gender": "F" },
     { "name": "David Lee", "role": "student", "gender": "M" },
