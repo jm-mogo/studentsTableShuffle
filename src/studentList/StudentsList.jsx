@@ -3,6 +3,7 @@ import addStudent from "./addStudent.jsx";
 import deleteStudent from "./deleteStudent.jsx";
 import updateName from "./updateName.jsx";
 import editStudent from "./editStudent.jsx";
+import AddStudentMenu from "./AddStudentMenu.jsx";
 
 function StudentsList({ students, setStudents, studentRole }) {
     const [newStudentNameInput, setNewStudentInput] = useState("");
@@ -11,28 +12,32 @@ function StudentsList({ students, setStudents, studentRole }) {
         item.role == studentRole ? studentCount++ : studentCount;
     });
 
-    const addNewStudent = () => {
-        addStudent(students, setStudents, newStudentNameInput, studentRole);
+    const addNewStudent = (gender) => {
+        addStudent(
+            students,
+            setStudents,
+            newStudentNameInput,
+            studentRole,
+            gender
+        );
         setNewStudentInput("");
     };
 
     return (
         <div>
-            <div>
-                <label htmlFor="newStudent">Add new student</label>
-                <input
-                    onChange={(e) => {
-                        setNewStudentInput(e.target.value);
-                    }}
-                    type="text"
-                    name="newStudent"
-                    id="newStudent"
-                    value={newStudentNameInput}
-                />
-                <button type="button" onClick={addNewStudent}>
-                    Add
-                </button>
-            </div>
+            <AddStudentMenu
+                addNewStudent={addNewStudent}
+                setNewStudentInput={setNewStudentInput}
+                studentRole={studentRole}
+                newStudentNameInput={newStudentNameInput}
+            />
+            <button
+                onClick={(e) => {
+                    document.getElementById("myNav").style.height = "100%";
+                }}
+            >
+                Add Student
+            </button>
             <h1>
                 There are {studentCount} {studentRole}s
             </h1>

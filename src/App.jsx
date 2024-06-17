@@ -4,6 +4,7 @@ import { useState } from "react";
 import data from "./data.json";
 import Shuffle from "./Shuffle.jsx";
 import downloadData from "./downloadData.jsx";
+import "./addStudent.css";
 
 function ButtonMenuSelection({ menuName, setMenuSelection }) {
     return (

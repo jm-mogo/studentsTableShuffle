@@ -3,7 +3,7 @@ const editStudent = (studentName, students, setStudents) => {
     newStudentsList.push(...students);
     newStudentsList.map((student) => {
         if (student.name == studentName) {
-            student.edit ? (student.edit = false) : (student.edit = true);
+            student.edit ? delete student["edit"] : (student.edit = true);
         }
     });
     setStudents(newStudentsList);
