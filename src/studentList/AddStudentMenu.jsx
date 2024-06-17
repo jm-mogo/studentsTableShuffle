@@ -4,6 +4,11 @@ function AddStudentMenu({
     setNewStudentInput,
     studentRole,
 }) {
+    function checkRadioInput() {
+        if (document.querySelector('input[name="gender"]:checked').id) {
+            return true;
+        }
+    }
     return (
         <div className="overlay" id="myNav">
             <div className="overlay-content">
@@ -48,6 +53,7 @@ function AddStudentMenu({
                             id="add-student-button"
                             type="button"
                             onClick={() => {
+                                if (!checkRadioInput()) return;
                                 document.getElementById("myNav").style.height =
                                     "0";
                                 addNewStudent(
