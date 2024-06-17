@@ -4,6 +4,11 @@ function AddStudentMenu({
     setNewStudentInput,
     studentRole,
 }) {
+    function closeNav() {
+        document.getElementById("myNav").style.height = "0";
+        document.querySelector('input[name="gender"]:checked').checked = false;
+        setNewStudentInput("");
+    }
     function checkRadioInput() {
         if (document.querySelector('input[name="gender"]:checked').id) {
             return true;
@@ -12,7 +17,7 @@ function AddStudentMenu({
     return (
         <div className="overlay" id="myNav">
             <div className="overlay-content">
-                <form>
+                <form action="none">
                     <h2 className="titleNewStudent">New {studentRole}</h2>
                     <div className="input-new-student">
                         <label htmlFor="name">Name:</label>
@@ -36,15 +41,12 @@ function AddStudentMenu({
                             <label htmlFor="F">Female</label>
                         </div>
                     </div>
-                    <div class="buttons-newStudent">
+                    <div className="buttons-newStudent">
                         <button
-                            class="closebtn"
+                            className="closebtn"
                             id="closebtn"
                             type="button"
-                            onClick={() => {
-                                document.getElementById("myNav").style.height =
-                                    "0";
-                            }}
+                            onClick={closeNav}
                         >
                             Cancel
                         </button>
@@ -54,16 +56,16 @@ function AddStudentMenu({
                             type="button"
                             onClick={() => {
                                 if (!checkRadioInput()) return;
-                                document.getElementById("myNav").style.height =
-                                    "0";
+
                                 addNewStudent(
                                     document.querySelector(
                                         'input[name="gender"]:checked'
                                     ).id
                                 );
+                                closeNav();
                             }}
                         >
-                            Add task
+                            Add student
                         </button>
                     </div>
                 </form>

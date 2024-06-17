@@ -67,7 +67,7 @@ function Shuffle({ students }) {
 
     return (
         <>
-            <div style={{ display: "flex", gap: "10px" }}>
+            <div>
                 <label htmlFor="">Ammount of tables</label>
                 <input
                     type="number"
@@ -77,7 +77,7 @@ function Shuffle({ students }) {
                 <button onClick={shuffleStudents}>Shuffle</button>
             </div>
 
-            <>
+            <div>
                 {tables.map((table, i) => (
                     <ol style={{ margin: "20px" }}>
                         table {i + 1}
@@ -107,7 +107,7 @@ function Shuffle({ students }) {
                         ))}
                     </ol>
                 ))}
-            </>
+            </div>
         </>
     );
 }

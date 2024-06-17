@@ -5,7 +5,8 @@ import updateName from "./updateName.jsx";
 import editStudent from "./editStudent.jsx";
 import AddStudentMenu from "./AddStudentMenu.jsx";
 
-function StudentsList({ students, setStudents, studentRole }) {
+function StudentsList({ students, setStudents }) {
+    const [studentRole, setStudentRole] = useState("student");
     const [newStudentNameInput, setNewStudentInput] = useState("");
     let studentCount = 0;
     students.map((item) => {
@@ -32,15 +33,40 @@ function StudentsList({ students, setStudents, studentRole }) {
                 newStudentNameInput={newStudentNameInput}
             />
             <button
+                className="addStudentBtn"
                 onClick={(e) => {
                     document.getElementById("myNav").style.height = "100%";
                 }}
             >
-                Add Student
+                +
             </button>
-            <h1>
+
+            <h1 className="title">Students list</h1>
+
+            <div className="rolesBtn">
+                <button
+                    className={studentRole == "student" ? "selectedMenu" : ""}
+                    onClick={() => {
+                        setStudentRole("student");
+                    }}
+                >
+                    Students
+                </button>
+                <button
+                    className={
+                        studentRole == "supervisor" ? "selectedMenu" : ""
+                    }
+                    onClick={() => {
+                        setStudentRole("supervisor");
+                    }}
+                >
+                    Supervisors
+                </button>
+            </div>
+
+            <h2 className="subTitle">
                 There are {studentCount} {studentRole}s
-            </h1>
+            </h2>
 
             <table>
                 <tbody>

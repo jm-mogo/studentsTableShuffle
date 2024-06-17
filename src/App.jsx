@@ -4,52 +4,51 @@ import { useState } from "react";
 import data from "./data.json";
 import Shuffle from "./Shuffle.jsx";
 import downloadData from "./downloadData.jsx";
+import "./App.css";
 import "./addStudent.css";
 
-function ButtonMenuSelection({ menuName, setMenuSelection }) {
-    return (
-        <button
-            onClick={() => {
-                setMenuSelection(menuName);
-            }}
-        >
-            {menuName}
-        </button>
-    );
-}
-
 function App() {
-    const [menuSelection, setMenuSelection] = useState("student");
     const [students, setStudents] = useState(data);
-
+    const [menuSelection, setMenuSelection] = useState("students");
     const get = async function () {
         downloadData(students);
     };
 
+    function displayMain() {
+        if (menuSelection == "students") {
+            return (
+                <StudentsList students={students} setStudents={setStudents} />
+            );
+        }
+        return <Shuffle students={students} />;
+    }
+
     return (
         <>
-            <ButtonMenuSelection
-                menuName={"student"}
-                setMenuSelection={setMenuSelection}
-            />
-            <ButtonMenuSelection
-                menuName={"supervisor"}
-                setMenuSelection={setMenuSelection}
-            />
-            <ButtonMenuSelection
-                menuName={"shuffle"}
-                setMenuSelection={setMenuSelection}
-            />
-            <button onClick={get}>Download data</button>
-            {menuSelection !== "shuffle" ? (
-                <StudentsList
-                    students={students}
-                    setStudents={setStudents}
-                    studentRole={menuSelection}
-                />
-            ) : (
-                <Shuffle students={students} />
-            )}
+            <header>
+                <h1>School cafeteria manager</h1>
+            </header>
+            <main>
+                <aside>
+                    <button
+                        onClick={() => {
+                            setMenuSelection("students");
+                        }}
+                    >
+                        Students List
+                    </button>
+                    <button
+                        onClick={() => {
+                            setMenuSelection("shuffle");
+                        }}
+                    >
+                        Shuffle students
+                    </button>
+                    <button>Backup data</button>
+                    <button>Upload backup</button>
+                </aside>
+                <section>{displayMain()}</section>
+            </main>
         </>
     );
 }
