@@ -7,7 +7,7 @@ function Shuffle({ students }) {
     );
     const Students = students.filter((student) => student.role == "student");
 
-    const [ammountOfTables, setAmmountOfTabls] = useState(0);
+    const [ammountOfTables, setAmmountOfTabls] = useState();
     const [tables, setTables] = useState([]);
     console.log(tables);
     const handleChange = (e) => {
@@ -77,16 +77,18 @@ function Shuffle({ students }) {
                 <button onClick={shuffleStudents}>Shuffle</button>
             </div>
 
-            <div>
+            <div className="tables-section">
                 {tables.map((table, i) => (
-                    <ol style={{ margin: "20px" }}>
-                        table {i + 1}
+                    <div> 
+                    <h1>table {i + 1}</h1>
+                    <ol className="table">
+                        
                         {table.map((student, j) => (
                             <>
                                 {student.role == "supervisor" ? (
                                     <li>
                                         {student.name}{" "}
-                                        <b style={{ color: "red" }}>
+                                        <b style={{ color: "rgb(35 129 222)" }}>
                                             Supervisor
                                         </b>
                                     </li>
@@ -94,18 +96,19 @@ function Shuffle({ students }) {
                                     <li>
                                         {" "}
                                         {student.name}{" "}
-                                        <button
+                                        {/* <button
                                             onClick={(e) => {
                                                 moveStudent(i, j);
                                             }}
                                         >
                                             move
-                                        </button>
+                                        </button> */}
                                     </li>
                                 )}
                             </>
                         ))}
                     </ol>
+                    </div>
                 ))}
             </div>
         </>

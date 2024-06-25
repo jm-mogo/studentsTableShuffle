@@ -5,7 +5,8 @@ import data from "./data.json";
 import Shuffle from "./shuffleStudents/Shuffle.jsx";
 import downloadData from "./downloadData.jsx";
 import "./App.css";
-import "./addStudent.css";
+import "./studentList/addStudent.css";
+import "./shuffleStudents/Shuffle.css"
 
 function App() {
     const [students, setStudents] = useState(data);

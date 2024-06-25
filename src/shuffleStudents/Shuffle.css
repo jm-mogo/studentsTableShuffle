@@ -1,0 +1,20 @@
+.tables-section {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 100px;
+    justify-content: center;
+}
+
+.table {
+    width: 300px;
+    border: 1px solid #999;
+    border-radius: 10px;
+    padding: 24px
+}
+
+.tables-section h1 {
+   text-align: center;
+}
