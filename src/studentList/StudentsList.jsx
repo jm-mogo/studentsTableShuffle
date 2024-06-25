@@ -138,7 +138,7 @@ function StudentsList({ students, setStudents }) {
                                                 }
                                                 onClick={() => {
                                                     editStudent(
-                                                        item.name,
+                                                        i,
                                                         students,
                                                         setStudents
                                                     );

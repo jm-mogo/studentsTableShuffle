@@ -6,7 +6,6 @@ const updateStudentRole = (e, i, students, setStudents) => {
     newStudentsList[index].role = e.target.value;
     delete newStudentsList[index].edit 
     setStudents(newStudentsList);
-
 }
 
 export default updateStudentRole

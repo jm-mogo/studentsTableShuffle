@@ -2,7 +2,7 @@ import StudentsList from "./studentList/StudentsList.jsx";
 // import Supervisors from "./Supervisors.jsx";
 import { useState } from "react";
 import data from "./data.json";
-import Shuffle from "./Shuffle.jsx";
+import Shuffle from "./shuffleStudents/Shuffle.jsx";
 import downloadData from "./downloadData.jsx";
 import "./App.css";
 import "./addStudent.css";
