@@ -31,22 +31,24 @@ function App() {
             </header>
             <main>
                 <aside>
-                    <button
+                    <button className={menuSelection == "students" && "menu-selected"}
                         onClick={() => {
                             setMenuSelection("students");
                         }}
-                    >
+                    >   
+                        <span className="icon students"> </span>
                         Students List
                     </button>
-                    <button
+                    <button className={menuSelection !== "students" && "menu-selected"}
                         onClick={() => {
                             setMenuSelection("shuffle");
                         }}
                     >
+                        <span className="icon shuffle"> </span>
                         Shuffle students
                     </button>
-                    <button>Backup data</button>
-                    <button>Upload backup</button>
+                    <button> <span className="icon backup"> </span> Backup data</button>
+                    <button> <span className="icon upload"> </span>Upload backup</button>
                 </aside>
                 <section>{displayMain()}</section>
             </main>

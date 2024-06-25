@@ -30,3 +30,53 @@ aside {
     padding: 20px;
     background-color: #095fb4;
 }
+
+aside button {
+    background: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    color: white;
+    text-align: left;
+    padding: 8px;
+    border-radius: 6px;
+    transition: .2s;
+}
+
+
+
+.students {
+    background: url("./icons/audience.png");
+}
+
+.shuffle {
+    background: url("./icons/shuffle-arrows.png");
+}
+
+.backup {
+    background: url("./icons/download.png");
+}
+
+.upload {
+    background: url("./icons/upload.png");
+}
+
+.icon { 
+    background-size: cover;
+    filter: invert(100%);
+    width: 1.6rem;
+    height: 1.6rem;
+}
+
+.menu-selected {
+    background: white;
+    color: #095fb4;
+
+}
+
+.menu-selected .icon {
+
+    filter: invert(14%) sepia(94%) saturate(6258%) hue-rotate(201deg) brightness(93%) contrast(93%);
+}
+
