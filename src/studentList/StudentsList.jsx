@@ -4,6 +4,7 @@ import deleteStudent from "./deleteStudent.jsx";
 import updateName from "./updateName.jsx";
 import editStudent from "./editStudent.jsx";
 import AddStudentMenu from "./AddStudentMenu.jsx";
+import updateStudentRole from "./updateStudentRole.jsx"
 
 function StudentsList({ students, setStudents }) {
     const [studentRole, setStudentRole] = useState("student");
@@ -101,11 +102,14 @@ function StudentsList({ students, setStudents }) {
                                                         <select
                                                             name="role"
                                                             id="role"
+                                                            onChange={e => {
+                                                                updateStudentRole(e, i, students, setStudents)
+                                                            }}
                                                         >
-                                                            <option value="student">
+                                                            <option value="student" selected={item.role == "student" && true}>
                                                                 Student
                                                             </option>
-                                                            <option value="supervisor">
+                                                            <option value="supervisor" selected={item.role == "supervisor" && true}>
                                                                 Supervisor
                                                             </option>
                                                         </select>
