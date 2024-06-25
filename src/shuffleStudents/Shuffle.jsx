@@ -6,6 +6,8 @@ function Shuffle({ students }) {
         (student) => student.role == "supervisor"
     );
     const Students = students.filter((student) => student.role == "student");
+    const MaleStudents = Students.filter((student) => student.gender == "M");
+    const FemaleStudents = Students.filter((student) => student.gender == "F");
 
     const [ammountOfTables, setAmmountOfTabls] = useState();
     const [tables, setTables] = useState([]);
@@ -23,15 +25,16 @@ function Shuffle({ students }) {
     };
 
     const shuffleStudents = () => {
-        shuffle(Students);
+        shuffle(MaleStudents);
+        shuffle(FemaleStudents);
         shuffle(Supervisors);
         let newTables = [];
         for (let i = 0; i < ammountOfTables; i++) {
             newTables.push([]);
         }
         let i = 0;
-        while (Students.length > 0) {
-            newTables[i].push(Students.shift());
+        while (MaleStudents.length > 0) {
+            newTables[i].push(MaleStudents.shift());
 
             if (i >= newTables.length - 1) {
                 i = 0;
@@ -39,7 +42,15 @@ function Shuffle({ students }) {
                 i++;
             }
         }
-        i = 0;
+        while (FemaleStudents.length > 0) {
+            newTables[i].push(FemaleStudents.shift());
+
+            if (i >= newTables.length - 1) {
+                i = 0;
+            } else {
+                i++;
+            }
+        }
         while (Supervisors.length > 0) {
             newTables[i].push(Supervisors.shift());
 
@@ -86,16 +97,16 @@ function Shuffle({ students }) {
                         {table.map((student, j) => (
                             <>
                                 {student.role == "supervisor" ? (
-                                    <li>
+                                    <li >
                                         {student.name}{" "}
                                         <b style={{ color: "rgb(35 129 222)" }}>
                                             Supervisor
                                         </b>
                                     </li>
                                 ) : (
-                                    <li>
+                                    <li style={student.gender == "M" ? {color: "blue"} : {color: "DeepPink"}}>
                                         {" "}
-                                        {student.name}{" "}
+                                        {student.name}
                                         {/* <button
                                             onClick={(e) => {
                                                 moveStudent(i, j);
