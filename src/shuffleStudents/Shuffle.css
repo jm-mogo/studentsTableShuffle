@@ -1,3 +1,10 @@
+.input-tables-section {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
 .tables-section {
     margin-top: 20px;
     display: flex;

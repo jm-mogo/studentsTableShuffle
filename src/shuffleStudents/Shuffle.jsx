@@ -67,7 +67,7 @@ function Shuffle({ students }) {
 
     return (
         <>
-            <div>
+            <div className="input-tables-section">
                 <label htmlFor="">Ammount of tables</label>
                 <input
                     type="number"
