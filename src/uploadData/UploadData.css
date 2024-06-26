@@ -1,0 +1,37 @@
+input[type="file"] {
+    width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+input[type="file"] + label {
+    font-size: 1.25em;
+    color: white;
+    background-color: #095fb4;
+    height: 40px;
+    width: 160px;
+    padding: 12px;
+    /* border-radius: 10px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+input[type="file"] :focus + label,
+input[type="file"]  + label:hover,
+#csvForm button {
+    cursor: pointer;
+}
+
+#csvForm button {
+    display: flex;
+}
+
+#csvForm button span {
+    display: flex;
+    filter: invert(14%) sepia(94%) saturate(6258%) hue-rotate(201deg) brightness(93%) contrast(93%);
+}

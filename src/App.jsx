@@ -3,11 +3,13 @@ import StudentsList from "./studentList/StudentsList.jsx";
 import { useState } from "react";
 import data from "./data.json";
 import Shuffle from "./shuffleStudents/Shuffle.jsx";
-import BackupData from "./backupData/BackupData.jsx"
-import UploadData from "./uploadData/UploadData.jsx"
+import BackupData from "./backupData/BackupData.jsx";
+import UploadData from "./uploadData/UploadData.jsx";
 import "./App.css";
 import "./studentList/addStudent.css";
-import "./shuffleStudents/Shuffle.css"
+import "./shuffleStudents/Shuffle.css";
+import "./backupData/BackupData.css";
+import "./uploadData/UploadData.css";
 
 function App() {
     const [students, setStudents] = useState(data);
@@ -21,17 +23,16 @@ function App() {
             return (
                 <StudentsList students={students} setStudents={setStudents} />
             );
-        } 
+        }
         if (menuSelection == "shuffle") {
             return <Shuffle students={students} />;
         }
         if (menuSelection == "backup") {
-            return <BackupData students={students}/>
+            return <BackupData students={students} />;
         }
         if (menuSelection == "upload") {
-            return <UploadData students={students} setStudents={setStudents}/>
+            return <UploadData students={students} setStudents={setStudents} />;
         }
-       
     }
 
     return (
@@ -41,15 +42,21 @@ function App() {
             </header>
             <main>
                 <aside>
-                    <button className={menuSelection == "students" && "menu-selected"}
+                    <button
+                        className={
+                            menuSelection == "students" ? "menu-selected" : ""
+                        }
                         onClick={() => {
                             setMenuSelection("students");
                         }}
-                    >   
+                    >
                         <span className="icon students"> </span>
                         Students List
                     </button>
-                    <button className={menuSelection == "shuffle" && "menu-selected"}
+                    <button
+                        className={
+                            menuSelection == "shuffle" ? "menu-selected" : ""
+                        }
                         onClick={() => {
                             setMenuSelection("shuffle");
                         }}
@@ -57,12 +64,28 @@ function App() {
                         <span className="icon shuffle"> </span>
                         Shuffle students
                     </button>
-                    <button className={menuSelection == "backup" && "menu-selected"} onClick={() => {
+                    <button
+                        className={
+                            menuSelection == "backup" ? "menu-selected" : ""
+                        }
+                        onClick={() => {
                             setMenuSelection("backup");
-                        }}> <span className="icon backup"> </span> Backup data</button>
-                    <button className={menuSelection == "upload" && "menu-selected"} onClick={() => {
+                        }}
+                    >
+                        {" "}
+                        <span className="icon backup"> </span> Backup data
+                    </button>
+                    <button
+                        className={
+                            menuSelection == "upload" ? "menu-selected" : ""
+                        }
+                        onClick={() => {
                             setMenuSelection("upload");
-                        }}> <span className="icon upload"> </span>Upload backup</button>
+                        }}
+                    >
+                        {" "}
+                        <span className="icon upload"> </span>Upload backup
+                    </button>
                 </aside>
                 <section>{displayMain()}</section>
             </main>
