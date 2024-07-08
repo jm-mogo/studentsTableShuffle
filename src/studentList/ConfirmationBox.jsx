@@ -26,16 +26,16 @@ const AskConfirmation = ({
                         </div>
                         <div className="confirmation-btns">
                             <button
-                                className="cancel-btn"
-                                onClick={handleCancel}
-                            >
-                                Cancel
-                            </button>
-                            <button
                                 className="delete-btn"
                                 onClick={handleDelete}
                             >
                                 Delete
+                            </button>
+                            <button
+                                className="cancel-btn"
+                                onClick={handleCancel}
+                            >
+                                Cancel
                             </button>
                         </div>
                     </div>
