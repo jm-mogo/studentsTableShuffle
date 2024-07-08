@@ -4,15 +4,22 @@ import deleteStudent from "./deleteStudent.jsx";
 import updateName from "./updateName.jsx";
 import editStudent from "./editStudent.jsx";
 import AddStudentMenu from "./AddStudentMenu.jsx";
-import updateStudentRole from "./updateStudentRole.jsx"
+import updateStudentRole from "./updateStudentRole.jsx";
+import ConfirmationBox from "./ConfirmationBox.jsx";
 
 function StudentsList({ students, setStudents }) {
     const [studentRole, setStudentRole] = useState("student");
     const [newStudentNameInput, setNewStudentInput] = useState("");
+    const [selectedStudent, setSelectedStudent] = useState("");
     let studentCount = 0;
     students.map((item) => {
         item.role == studentRole ? studentCount++ : studentCount;
     });
+
+    const AskConfirmationToDeleteUser = (studentName) => {
+        document.getElementById("confirmation").style.display = "block";
+        setSelectedStudent(studentName);
+    };
 
     const addNewStudent = (gender) => {
         addStudent(
@@ -27,6 +34,11 @@ function StudentsList({ students, setStudents }) {
 
     return (
         <div>
+            <ConfirmationBox
+                selectedStudent={selectedStudent}
+                students={students}
+                setStudents={setStudents}
+            />
             <AddStudentMenu
                 addNewStudent={addNewStudent}
                 setNewStudentInput={setNewStudentInput}
@@ -102,14 +114,33 @@ function StudentsList({ students, setStudents }) {
                                                         <select
                                                             name="role"
                                                             id="role"
-                                                            onChange={e => {
-                                                                updateStudentRole(e, i, students, setStudents)
+                                                            onChange={(e) => {
+                                                                updateStudentRole(
+                                                                    e,
+                                                                    i,
+                                                                    students,
+                                                                    setStudents
+                                                                );
                                                             }}
                                                         >
-                                                            <option value="student" selected={item.role == "student" && true}>
+                                                            <option
+                                                                value="student"
+                                                                selected={
+                                                                    item.role ==
+                                                                        "student" &&
+                                                                    true
+                                                                }
+                                                            >
                                                                 Student
                                                             </option>
-                                                            <option value="supervisor" selected={item.role == "supervisor" && true}>
+                                                            <option
+                                                                value="supervisor"
+                                                                selected={
+                                                                    item.role ==
+                                                                        "supervisor" &&
+                                                                    true
+                                                                }
+                                                            >
                                                                 Supervisor
                                                             </option>
                                                         </select>
@@ -123,9 +154,7 @@ function StudentsList({ students, setStudents }) {
                                             <button
                                                 className="deleteBtn"
                                                 onClick={() => {
-                                                    deleteStudent(
-                                                        students,
-                                                        setStudents,
+                                                    AskConfirmationToDeleteUser(
                                                         item.name
                                                     );
                                                 }}

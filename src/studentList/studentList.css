@@ -101,3 +101,76 @@ tr:nth-child(even) {background-color: #f2f2f2;}
     height: 20px;
     background-size: cover;
 }
+
+.overlay-box {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #202020be;
+    overflow: hidden; /* disable scrolling*/
+    z-index: 2;
+}
+
+.content-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+}
+
+.confirmation-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 400px;
+    height: 200px;
+    border-radius: 4px;
+    background-color: #eef2fa;
+}
+
+.question {
+    font-size: 20px;
+    padding-top: 20px;
+    font-weight: bold;
+}
+
+.action-description {
+    font-size: 16px;
+}
+
+.action-description span {
+    color: #ed4b4b;
+}
+
+.confirmation-btns {
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.confirmation-btns button {
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+    color: #ffffff;
+    padding: 8px 26px;
+}
+
+.confirmation-btns button:hover {
+    cursor: pointer;
+}
+
+.cancel-btn {
+    background-color: #898989;
+}
+
+.delete-btn {
+    background-color: #ed4b4b;
+}
