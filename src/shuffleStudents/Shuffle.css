@@ -1,3 +1,7 @@
+li {
+    list-style: none;
+}
+
 .input-tables-section {
     margin-top: 12px;
     margin-bottom: 12px;

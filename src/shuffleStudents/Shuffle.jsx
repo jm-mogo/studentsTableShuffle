@@ -11,7 +11,6 @@ function Shuffle({ students }) {
 
     const [ammountOfTables, setAmmountOfTabls] = useState();
     const [tables, setTables] = useState([]);
-    console.log(tables);
     const handleChange = (e) => {
         setAmmountOfTabls(e.target.value);
     };
@@ -63,16 +62,13 @@ function Shuffle({ students }) {
         setTables(newTables);
     };
 
-    const moveStudent = (studentTable, studentIndex) => {
+    const moveStudent = (e, studentTable, studentIndex) => {
+        console.log(e.target.value, studentTable, studentIndex);
         let newTables = [...tables];
-        let tableToMove = Number(prompt("Choose table to move to: "));
-        if (tableToMove > 12 || tableToMove < 1) {
-            alert("invalid table");
-            return;
-        }
+        let tableToMove = e.target.value;
         let newStudent = newTables[studentTable].splice(studentIndex, 1);
-        console.log(newStudent);
         newTables[tableToMove - 1].unshift(...newStudent);
+        e.target.value = studentTable + 1;
         setTables(newTables);
     };
 
@@ -90,35 +86,83 @@ function Shuffle({ students }) {
 
             <div className="tables-section">
                 {tables.map((table, i) => (
-                    <div> 
-                    <h1>table {i + 1}</h1>
-                    <ol className="table">
-                        
-                        {table.map((student, j) => (
-                            <>
-                                {student.role == "supervisor" ? (
-                                    <li >
-                                        {student.name}{" "}
-                                        <b style={{ color: "rgb(35 129 222)" }}>
-                                            Supervisor
-                                        </b>
-                                    </li>
-                                ) : (
-                                    <li style={student.gender == "M" ? {color: "blue"} : {color: "DeepPink"}}>
-                                        {" "}
-                                        {student.name}
-                                        {/* <button
+                    <div>
+                        <h1>table {i + 1}</h1>
+                        <ol className="table">
+                            {table.map((student, studentIndex) => (
+                                <>
+                                    {student.role == "supervisor" ? (
+                                        <li>
+                                            {studentIndex +
+                                                1 +
+                                                ". " +
+                                                student.name}{" "}
+                                            <b
+                                                style={{
+                                                    color: "rgb(35 129 222)",
+                                                }}
+                                            >
+                                                Supervisor
+                                            </b>
+                                        </li>
+                                    ) : (
+                                        <li
+                                            style={
+                                                student.gender == "M"
+                                                    ? {
+                                                          color: "blue",
+                                                          display: "flex",
+                                                          width: "100%",
+                                                          justifyContent:
+                                                              "space-between",
+                                                      }
+                                                    : {
+                                                          color: "DeepPink",
+                                                          display: "flex",
+                                                          width: "100%",
+                                                          justifyContent:
+                                                              "space-between",
+                                                      }
+                                            }
+                                        >
+                                            {" "}
+                                            {studentIndex +
+                                                1 +
+                                                ". " +
+                                                student.name}
+                                            <select
+                                                name="table"
+                                                id="table"
+                                                onChange={(e) => {
+                                                    moveStudent(
+                                                        e,
+                                                        i,
+                                                        studentIndex
+                                                    );
+                                                }}
+                                            >
+                                                {tables.map((value, index) => (
+                                                    <option
+                                                        selected={
+                                                            i == index && true
+                                                        }
+                                                    >
+                                                        {index + 1}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                            {/* <button
                                             onClick={(e) => {
                                                 moveStudent(i, j);
                                             }}
                                         >
                                             move
                                         </button> */}
-                                    </li>
-                                )}
-                            </>
-                        ))}
-                    </ol>
+                                        </li>
+                                    )}
+                                </>
+                            ))}
+                        </ol>
                     </div>
                 ))}
             </div>
