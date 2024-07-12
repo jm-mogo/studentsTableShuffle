@@ -1,7 +1,7 @@
 import StudentsList from "./studentList/StudentsList.jsx";
 // import Supervisors from "./Supervisors.jsx";
-import { useState } from "react";
-import data from "./data.json";
+import { useState, useEffect } from "react";
+// import data from "./data.json";
 import Shuffle from "./shuffleStudents/Shuffle.jsx";
 import BackupData from "./backupData/BackupData.jsx";
 import UploadData from "./uploadData/UploadData.jsx";
@@ -11,13 +11,27 @@ import "./shuffleStudents/Shuffle.css";
 import "./backupData/BackupData.css";
 import "./uploadData/UploadData.css";
 
+
 function App() {
-    const [students, setStudents] = useState(data);
+    const [students, setStudents] = useState([]);
     const [menuSelection, setMenuSelection] = useState("students");
     const get = async function () {
         downloadData(students);
     };
 
+    useEffect(() => {
+        const studentsData = JSON.parse(localStorage.getItem('students'));
+        if (studentsData.length > 0) {
+            setStudents(studentsData);
+        }
+      }, []);
+
+
+      useEffect(() => {
+        localStorage.setItem('students', JSON.stringify(students));
+      }, [students]);
+
+      
     function displayMain() {
         if (menuSelection == "students") {
             return (
