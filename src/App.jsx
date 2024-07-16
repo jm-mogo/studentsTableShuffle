@@ -11,7 +11,6 @@ import "./shuffleStudents/Shuffle.css";
 import "./backupData/BackupData.css";
 import "./uploadData/UploadData.css";
 
-
 function App() {
     const [students, setStudents] = useState([]);
     const [menuSelection, setMenuSelection] = useState("students");
@@ -20,18 +19,16 @@ function App() {
     };
 
     useEffect(() => {
-        const studentsData = JSON.parse(localStorage.getItem('students'));
-        if (studentsData.length > 0) {
+        const studentsData = JSON.parse(localStorage.getItem("students"));
+        if (studentsData) {
             setStudents(studentsData);
         }
-      }, []);
+    }, []);
 
+    useEffect(() => {
+        localStorage.setItem("students", JSON.stringify(students));
+    }, [students]);
 
-      useEffect(() => {
-        localStorage.setItem('students', JSON.stringify(students));
-      }, [students]);
-
-      
     function displayMain() {
         if (menuSelection == "students") {
             return (

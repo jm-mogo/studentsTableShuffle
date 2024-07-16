@@ -16,6 +16,17 @@ function StudentsList({ students, setStudents }) {
         item.role == studentRole ? studentCount++ : studentCount;
     });
 
+    students.sort(function (a, b) {
+        if (a.name < b.name) {
+            return -1;
+        }
+        if (b.name > a.name) {
+            return 1;
+        }
+        return 0;
+    });
+    console.log(students);
+
     const AskConfirmationToDeleteUser = (studentName) => {
         document.getElementById("confirmation").style.display = "block";
         setSelectedStudent(studentName);
