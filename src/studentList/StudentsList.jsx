@@ -17,11 +17,11 @@ function StudentsList({ students, setStudents }) {
     });
 
     students.sort(function (a, b) {
-        if (a.name < b.name) {
-            return -1;
-        }
-        if (b.name > a.name) {
+        if (a.name > b.name) {
             return 1;
+        }
+        if (b.name < a.name) {
+            return -1;
         }
         return 0;
     });
