@@ -35,12 +35,10 @@ const UploadData = ({ students, setStudents }) => {
             alert("not valid file \nPlease upload a .csv file");
             return;
         }
-        console.log(file.name);
         const reader = new FileReader();
         reader.onload = function (e) {
             // Access to content with e.target.result
             const csvArray = csvToArr(e.target.result, ",");
-            console.log(csvArray);
             setStudents(csvArray);
         };
 
@@ -65,7 +63,8 @@ const UploadData = ({ students, setStudents }) => {
                     onChange={onChange}
                 />
                 <label htmlFor="csvInput">
-                    {fileName.length > 0 ? fileName : "Choose file..."}
+                    <span className="icon upload"></span>
+                    {fileName.length > 0 ? fileName : "No file chosen, yet!"}
                 </label>
                 <button
                     type="button"
@@ -73,8 +72,7 @@ const UploadData = ({ students, setStudents }) => {
                         convertData(e);
                     }}
                 >
-                    <span className="icon upload"></span>
-                    Upload
+                    UPLOAD FILE
                 </button>
             </form>
         </>
