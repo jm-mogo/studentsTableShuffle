@@ -1,3 +1,35 @@
 .download-btn {
     margin-top: 20px;
+    cursor: pointer;
+    display: flex;
+    border: none;
+    border-radius: 12px;
+    background-color: #095fb4;
+    color: white;
+    font-size: 16px;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 220px;
+    
+}
+
+.download-btn:hover {
+    background-color: #064079;
+}
+
+.file-view {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    border: solid rgba(157, 157, 157, 0.322) 4px;
+    border-radius: 10px;
+    padding: 12px;
+}
+
+.csv {
+    background: url("../icons/csv.png");
+    background-size: cover;
+    width: 40px;
+    height: 40px;
 }

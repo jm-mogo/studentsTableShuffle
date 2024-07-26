@@ -1,5 +1,11 @@
-input[type="file"] {
-    
+.backup-title {
+    padding: 20px;
+    font-size: 1.4rem;
+    color: #4e4e4e;
+    text-align: center;
+}
+
+input[type="file"] {   
     width: 0.1px;
 	height: 0.1px;
 	opacity: 0;
@@ -9,7 +15,7 @@ input[type="file"] {
 }
 
 input[type="file"] + label {
-    margin-top: 40px;
+    margin-top: 20px;
     font-size: 1.25em;
     border: dashed #a6a6a6;
     color: gray;
@@ -33,7 +39,7 @@ input[type="file"]  + label:hover,
 #csvForm button {
     display: flex;
     border: none;
-    border-radius: 16px;
+    border-radius: 12px;
     background-color: #095fb4;
     color: white;
     font-size: 16px;
@@ -41,6 +47,10 @@ input[type="file"]  + label:hover,
     align-items: center;
     height: 40px;
     width: 280px;
+}
+
+#csvForm button:hover {
+    background-color: #064079;
 }
 
 #csvForm span {

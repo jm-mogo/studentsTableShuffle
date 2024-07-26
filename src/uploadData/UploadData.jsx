@@ -52,9 +52,10 @@ const UploadData = ({ students, setStudents }) => {
 
     return (
         <>
-            <h1>
+            <h2 className="backup-title">
                 Upload a previously downloaded CSV file to restore your students
-            </h1>
+            </h2>
+
             <form id="csvForm">
                 <input
                     type="file"
