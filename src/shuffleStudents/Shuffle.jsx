@@ -23,6 +23,23 @@ function Shuffle({ students }) {
         return array;
     };
 
+    const sortTablesByGender = (tables) => {
+        tables.forEach((table) => {
+            table.sort(function (a, b) {
+                if (a.role === "supervisor") {
+                    return 0;
+                }
+                if (a.gender > b.gender) {
+                    return -1;
+                }
+                if (b.gender < a.gender) {
+                    return 1;
+                }
+                return 0;
+            });
+        });
+    };
+
     const shuffleStudents = () => {
         shuffle(MaleStudents);
         shuffle(FemaleStudents);
@@ -59,6 +76,7 @@ function Shuffle({ students }) {
                 i++;
             }
         }
+        sortTablesByGender(newTables);
         setTables(newTables);
     };
 
@@ -69,6 +87,7 @@ function Shuffle({ students }) {
         let newStudent = newTables[studentTable].splice(studentIndex, 1);
         newTables[tableToMove - 1].unshift(...newStudent);
         e.target.value = studentTable + 1;
+        sortTablesByGender(newTables);
         setTables(newTables);
     };
 
