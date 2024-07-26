@@ -106,58 +106,49 @@ function Shuffle({ students }) {
                                             </b>
                                         </li>
                                     ) : (
-                                        <li
-                                            style={
-                                                student.gender == "M"
-                                                    ? {
-                                                          color: "blue",
-                                                          display: "flex",
-                                                          width: "100%",
-                                                          justifyContent:
-                                                              "space-between",
-                                                      }
-                                                    : {
-                                                          color: "DeepPink",
-                                                          display: "flex",
-                                                          width: "100%",
-                                                          justifyContent:
-                                                              "space-between",
-                                                      }
-                                            }
-                                        >
-                                            {" "}
-                                            {studentIndex +
-                                                1 +
-                                                ". " +
-                                                student.name}
-                                            <select
-                                                name="table"
-                                                id="table"
-                                                onChange={(e) => {
-                                                    moveStudent(
-                                                        e,
-                                                        i,
-                                                        studentIndex
-                                                    );
-                                                }}
-                                            >
-                                                {tables.map((value, index) => (
-                                                    <option
-                                                        selected={
-                                                            i == index && true
-                                                        }
-                                                    >
-                                                        {index + 1}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                            {/* <button
-                                            onClick={(e) => {
-                                                moveStudent(i, j);
-                                            }}
-                                        >
-                                            move
-                                        </button> */}
+                                        <li className="tableData">
+                                            <p>
+                                                {studentIndex +
+                                                    1 +
+                                                    ". " +
+                                                    student.name}
+                                            </p>
+                                            <div>
+                                                <select
+                                                    name="table"
+                                                    id="table"
+                                                    onChange={(e) => {
+                                                        moveStudent(
+                                                            e,
+                                                            i,
+                                                            studentIndex
+                                                        );
+                                                    }}
+                                                >
+                                                    {tables.map(
+                                                        (value, index) => (
+                                                            <option
+                                                                selected={
+                                                                    i ==
+                                                                        index &&
+                                                                    true
+                                                                }
+                                                            >
+                                                                {index + 1}
+                                                            </option>
+                                                        )
+                                                    )}
+                                                </select>
+                                                <span
+                                                    className={
+                                                        student.gender == "M"
+                                                            ? "boy"
+                                                            : "girl"
+                                                    }
+                                                >
+                                                    {" " + "O"}
+                                                </span>
+                                            </div>
                                         </li>
                                     )}
                                 </>

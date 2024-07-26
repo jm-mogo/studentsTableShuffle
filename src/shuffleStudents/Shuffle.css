@@ -29,3 +29,22 @@ li {
 .tables-section h1 {
    text-align: center;
 }
+
+
+.tableData {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+   
+}
+
+.boy {
+    color: rgb(62, 187, 245);
+    font-weight: bold;
+}
+
+.girl {
+    color: rgb(244, 147, 255);
+    font-weight: bold;
+  
+}

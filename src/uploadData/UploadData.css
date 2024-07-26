@@ -11,14 +11,12 @@ input[type="file"] + label {
     font-size: 1.25em;
     color: white;
     background-color: #095fb4;
-    height: 40px;
-    width: 160px;
-    padding: 12px;
+    height: 48px;
+    width: 180px;
     /* border-radius: 10px; */
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
 }
 
 input[type="file"] :focus + label,

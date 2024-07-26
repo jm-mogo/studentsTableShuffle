@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 const UploadData = ({ students, setStudents }) => {
+    const [uploadStatus, setUpload] = useState(false);
     const [fileName, setFileName] = useState("");
     function onChange() {
         if (document.querySelector("#csvInput").files.length > 0) {
@@ -24,7 +25,16 @@ const UploadData = ({ students, setStudents }) => {
     }
 
     const convertData = (e) => {
+        let allowedExtensions = /(\.csv)$/i;
         const file = document.querySelector("#csvInput").files[0];
+        if (!file) {
+            alert("upload a file");
+            return;
+        }
+        if (!allowedExtensions.exec(file.name)) {
+            alert("not valid file \nPlease upload a .csv file");
+            return;
+        }
         console.log(file.name);
         const reader = new FileReader();
         reader.onload = function (e) {
@@ -35,9 +45,12 @@ const UploadData = ({ students, setStudents }) => {
         };
 
         reader.readAsText(file);
-
-        console.log(file);
+        setUpload(true);
     };
+
+    if (uploadStatus) {
+        return <h1>Uploaded succesfully</h1>;
+    }
 
     return (
         <>
