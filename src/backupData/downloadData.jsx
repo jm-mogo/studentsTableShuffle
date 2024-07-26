@@ -40,7 +40,7 @@ function downloadData(students) {
 
         // Set the URL and download attribute of the anchor tag
         a.href = url;
-        a.download = "download.csv";
+        a.download = "backup-students.csv";
 
         // Trigger the download by clicking the anchor tag
         a.click();
