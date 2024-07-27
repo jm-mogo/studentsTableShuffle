@@ -31,25 +31,20 @@ function AddStudentMenu({
                         />
                     </div>
                     <div className="input-radio">
-                        <legend>Gender</legend>
+                        <legend>Gender:</legend>
                         <div>
-                            <input type="radio" id="M" name="gender" />
-                            <label htmlFor="M">Male</label>
+                            <label htmlFor="M">
+                                Male <input type="radio" id="M" name="gender" />
+                            </label>
                         </div>
                         <div>
-                            <input type="radio" id="F" name="gender" />
-                            <label htmlFor="F">Female</label>
+                            <label htmlFor="F">
+                                Female{" "}
+                                <input type="radio" id="F" name="gender" />
+                            </label>
                         </div>
                     </div>
                     <div className="buttons-newStudent">
-                        <button
-                            className="closebtn"
-                            id="closebtn"
-                            type="button"
-                            onClick={closeNav}
-                        >
-                            Cancel
-                        </button>
                         <button
                             className="add-student-button"
                             id="add-student-button"
@@ -65,7 +60,15 @@ function AddStudentMenu({
                                 closeNav();
                             }}
                         >
-                            Add student
+                            Add
+                        </button>
+                        <button
+                            className="closebtn"
+                            id="closebtn"
+                            type="button"
+                            onClick={closeNav}
+                        >
+                            Cancel
                         </button>
                     </div>
                 </form>

@@ -41,12 +41,11 @@ form {
 }
 
 .buttons-newStudent {
-    padding-top: 40px;
     display: grid;
     width: 80%;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
-    padding-top: 100px;
+    padding-top: 80px;
 }
 
 .input-new-student {
@@ -73,29 +72,55 @@ form {
     width: 240px;
 }
 
-.input-radio div {
+.input-radio div  {
+    width: 80px;
+    height: 32px;
+    margin-top: 6px;
     margin-left: 20px;
+    border: solid 1px;
+    border-radius: 6%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.input-radio div label {
+    cursor: pointer;
+    padding: 10px 20px;
+}
+
+input[type="radio"] {
+    appearance: none;
+    margin: 0;
+    display: flex;
+}
+
+
+.input-radio div:has(input[type="radio"]:checked) {
+    background-color: #4481be;
+    color: white;
+    font-weight: bold;
 }
 
 .closebtn,
 .add-student-button {
-    height: 40px;
     border: none;
-    border-radius: 20px;
-    box-shadow: 4px 5px 12px 2px #a3a2a2;
-    transition: 0.2s;
+    font-size: 16px;
+    height: 40px;
+    font-weight: bold;
+    border-radius: 4px;
+    color: #ffffff;
+    padding: 8px 26px;
+    cursor: pointer;
 }
 
 .add-student-button {
-    background: #84d7a9;
+    background: #659edb;
 }
 
 
 .closebtn {
-    background: #d65656;
-}
-
-.add-student-button:hover,
-.closebtn:hover {
-    scale: 1.08;
+    background-color: #898989;
 }

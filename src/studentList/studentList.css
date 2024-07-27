@@ -25,6 +25,7 @@
     border-radius: 10%;
     height: 48px;
     width: 110px;
+    cursor: pointer;
 }
 
 .selectedMenu  {
@@ -50,6 +51,7 @@
     font-weight: bold;
     display: flex;
     justify-content: center;
+    cursor: pointer;
 }
 
 table {

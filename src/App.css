@@ -50,6 +50,7 @@ aside button {
     padding: 8px;
     border-radius: 6px;
     transition: .2s;
+    cursor: pointer;
 }
 
 
