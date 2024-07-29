@@ -1,10 +1,11 @@
 import deleteStudent from "./deleteStudent";
+import Button from "../Button";
 
 const AskConfirmation = ({
     students,
     setStudents,
-    selectedStudent = "Mike Morales",
-    action = "delete",
+    selectedStudent,
+    action,
 }) => {
     const handleCancel = () => {
         document.getElementById("confirmation").style.display = "none";
@@ -25,18 +26,12 @@ const AskConfirmation = ({
                             <b>{selectedStudent}</b>
                         </div>
                         <div className="confirmation-btns">
-                            <button
-                                className="delete-btn"
-                                onClick={handleDelete}
-                            >
+                            <Button varient="danger" onClick={handleDelete}>
                                 Delete
-                            </button>
-                            <button
-                                className="cancel-btn"
-                                onClick={handleCancel}
-                            >
+                            </Button>
+                            <Button varient="secondary" onClick={handleCancel}>
                                 Cancel
-                            </button>
+                            </Button>
                         </div>
                     </div>
                 </div>

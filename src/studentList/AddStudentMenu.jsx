@@ -1,3 +1,5 @@
+import Button from "../Button";
+
 function AddStudentMenu({
     addNewStudent,
     newStudentNameInput,
@@ -14,6 +16,16 @@ function AddStudentMenu({
             return true;
         }
     }
+
+    function addStudent() {
+        if (!checkRadioInput()) return;
+
+        addNewStudent(
+            document.querySelector('input[name="gender"]:checked').id
+        );
+        closeNav();
+    }
+
     return (
         <div className="overlay" id="myNav">
             <div className="overlay-content">
@@ -45,31 +57,12 @@ function AddStudentMenu({
                         </div>
                     </div>
                     <div className="buttons-newStudent">
-                        <button
-                            className="add-student-button"
-                            id="add-student-button"
-                            type="button"
-                            onClick={() => {
-                                if (!checkRadioInput()) return;
-
-                                addNewStudent(
-                                    document.querySelector(
-                                        'input[name="gender"]:checked'
-                                    ).id
-                                );
-                                closeNav();
-                            }}
-                        >
+                        <Button varient="primary" onClick={addStudent}>
                             Add
-                        </button>
-                        <button
-                            className="closebtn"
-                            id="closebtn"
-                            type="button"
-                            onClick={closeNav}
-                        >
+                        </Button>
+                        <Button varient="secondary" onClick={closeNav}>
                             Cancel
-                        </button>
+                        </Button>
                     </div>
                 </form>
             </div>

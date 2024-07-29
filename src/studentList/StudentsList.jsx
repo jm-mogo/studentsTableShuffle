@@ -32,6 +32,11 @@ function StudentsList({ students, setStudents }) {
         setSelectedStudent(studentName);
     };
 
+    const AskConfirmationToMoveUser = (studentName) => {
+        document.getElementById("confirmation").style.display = "block";
+        setSelectedStudent(studentName);
+    };
+
     const addNewStudent = (gender) => {
         addStudent(
             students,

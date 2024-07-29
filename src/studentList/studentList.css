@@ -156,23 +156,3 @@ tr:nth-child(even) {background-color: #d9d9d9;}
     gap: 20px;
 }
 
-.confirmation-btns button {
-    border: none;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 4px;
-    color: #ffffff;
-    padding: 8px 26px;
-}
-
-.confirmation-btns button:hover {
-    cursor: pointer;
-}
-
-.cancel-btn {
-    background-color: #898989;
-}
-
-.delete-btn {
-    background-color: #ed4b4b;
-}

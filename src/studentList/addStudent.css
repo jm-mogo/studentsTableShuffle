@@ -115,12 +115,3 @@ input[type="radio"] {
     padding: 8px 26px;
     cursor: pointer;
 }
-
-.add-student-button {
-    background: #659edb;
-}
-
-
-.closebtn {
-    background-color: #898989;
-}
