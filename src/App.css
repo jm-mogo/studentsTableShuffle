@@ -32,11 +32,17 @@ aside {
     margin-top: 10vh;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    justify-content: space-between;
     width: 24vw;
-    min-height: 90vh;
+    height: 90vh;
     padding: 20px;
     background-color: #095fb4;
+}
+
+.aside-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 aside button {
@@ -52,6 +58,7 @@ aside button {
     transition: .2s;
     cursor: pointer;
 }
+
 
 
 
@@ -71,6 +78,14 @@ aside button {
     background: url("./icons/upload.png");
 }
 
+.instagram {
+    background: url("./icons/insta.png");
+}
+
+.github {
+    background: url("./icons/github-sign.png");
+}
+
 .icon { 
     background-size: cover;
     filter: invert(100%);
@@ -85,7 +100,6 @@ aside button {
 }
 
 .menu-selected .icon {
-
     filter: invert(14%) sepia(94%) saturate(6258%) hue-rotate(201deg) brightness(93%) contrast(93%);
 }
 

@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import Shuffle from "./shuffleStudents/Shuffle.jsx";
 import BackupData from "./backupData/BackupData.jsx";
 import UploadData from "./uploadData/UploadData.jsx";
+import Footer from "./Footer.jsx";
 import "./App.css";
 import "./studentList/addStudent.css";
 import "./shuffleStudents/Shuffle.css";
@@ -53,50 +54,58 @@ function App() {
             </header>
             <main>
                 <aside>
-                    <button
-                        className={
-                            menuSelection == "students" ? "menu-selected" : ""
-                        }
-                        onClick={() => {
-                            setMenuSelection("students");
-                        }}
-                    >
-                        <span className="icon students"> </span>
-                        Students List
-                    </button>
-                    <button
-                        className={
-                            menuSelection == "shuffle" ? "menu-selected" : ""
-                        }
-                        onClick={() => {
-                            setMenuSelection("shuffle");
-                        }}
-                    >
-                        <span className="icon shuffle"> </span>
-                        Shuffle students
-                    </button>
-                    <button
-                        className={
-                            menuSelection == "backup" ? "menu-selected" : ""
-                        }
-                        onClick={() => {
-                            setMenuSelection("backup");
-                        }}
-                    >
-                        {" "}
-                        <span className="icon backup"> </span> Backup data
-                    </button>
-                    <button
-                        className={
-                            menuSelection == "upload" ? "menu-selected" : ""
-                        }
-                        onClick={() => {
-                            setMenuSelection("upload");
-                        }}
-                    >
-                        {" "}
-                        <span className="icon upload"> </span>Upload backup
-                    </button>
+                    <div className="aside-btns">
+                        <button
+                            className={
+                                menuSelection == "students"
+                                    ? "menu-selected"
+                                    : ""
+                            }
+                            onClick={() => {
+                                setMenuSelection("students");
+                            }}
+                        >
+                            <span className="icon students"> </span>
+                            Students List
+                        </button>
+                        <button
+                            className={
+                                menuSelection == "shuffle"
+                                    ? "menu-selected"
+                                    : ""
+                            }
+                            onClick={() => {
+                                setMenuSelection("shuffle");
+                            }}
+                        >
+                            <span className="icon shuffle"> </span>
+                            Shuffle students
+                        </button>
+                        <button
+                            className={
+                                menuSelection == "backup" ? "menu-selected" : ""
+                            }
+                            onClick={() => {
+                                setMenuSelection("backup");
+                            }}
+                        >
+                            {" "}
+                            <span className="icon backup"> </span> Backup data
+                        </button>
+                        <button
+                            className={
+                                menuSelection == "upload" ? "menu-selected" : ""
+                            }
+                            onClick={() => {
+                                setMenuSelection("upload");
+                            }}
+                        >
+                            {" "}
+                            <span className="icon upload"> </span>Upload backup
+                        </button>
+                    </div>
+
+                    <Footer />
                 </aside>
                 <section>{displayMain()}</section>
             </main>
