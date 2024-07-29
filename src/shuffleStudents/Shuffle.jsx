@@ -93,6 +93,7 @@ function Shuffle({ students }) {
 
     return (
         <>
+            <h1>There are {Supervisors.length} supervisors</h1>
             <div className="input-tables-section">
                 <label htmlFor="">Ammount of tables</label>
                 <input
@@ -111,18 +112,49 @@ function Shuffle({ students }) {
                             {table.map((student, studentIndex) => (
                                 <>
                                     {student.role == "supervisor" ? (
-                                        <li>
-                                            {studentIndex +
-                                                1 +
-                                                ". " +
-                                                student.name}{" "}
-                                            <b
-                                                style={{
-                                                    color: "rgb(35 129 222)",
-                                                }}
-                                            >
-                                                Supervisor
+                                        <li className="tableData">
+                                            <b>
+                                                {studentIndex +
+                                                    1 +
+                                                    ". " +
+                                                    student.name}{" "}
                                             </b>
+                                            <div>
+                                                <select
+                                                    name="table"
+                                                    id="table"
+                                                    onChange={(e) => {
+                                                        moveStudent(
+                                                            e,
+                                                            i,
+                                                            studentIndex
+                                                        );
+                                                    }}
+                                                >
+                                                    {tables.map(
+                                                        (value, index) => (
+                                                            <option
+                                                                selected={
+                                                                    i ==
+                                                                        index &&
+                                                                    true
+                                                                }
+                                                            >
+                                                                {index + 1}
+                                                            </option>
+                                                        )
+                                                    )}
+                                                </select>
+                                                <span
+                                                    className={
+                                                        student.gender == "M"
+                                                            ? "boy"
+                                                            : "girl"
+                                                    }
+                                                >
+                                                    {" " + "O"}
+                                                </span>
+                                            </div>
                                         </li>
                                     ) : (
                                         <li className="tableData">
