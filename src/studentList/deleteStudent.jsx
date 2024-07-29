@@ -1,7 +1,7 @@
-function deleteStudent(students, setStudents, studentName) {
+function deleteStudent(students, setStudents, studentIndex) {
     let newStudentsList = [];
     newStudentsList.push(...students);
-    newStudentsList = newStudentsList.filter((s) => s.name !== studentName);
+    newStudentsList.splice(studentIndex, 1);
     setStudents(newStudentsList);
 }
 

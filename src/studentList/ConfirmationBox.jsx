@@ -1,5 +1,6 @@
 import deleteStudent from "./deleteStudent";
 import Button from "../Button";
+import updateStudentRole from "./updateStudentRole";
 
 const AskConfirmation = ({
     students,
@@ -9,10 +10,13 @@ const AskConfirmation = ({
 }) => {
     const handleCancel = () => {
         document.getElementById("confirmation").style.display = "none";
-        console.log("hi");
     };
-    const handleDelete = () => {
-        deleteStudent(students, setStudents, selectedStudent);
+    const handleEvent = () => {
+        if (action == "delete")
+            deleteStudent(students, setStudents, selectedStudent.index);
+        else {
+            updateStudentRole(selectedStudent.index, students, setStudents);
+        }
         document.getElementById("confirmation").style.display = "none";
     };
     return (
@@ -23,11 +27,11 @@ const AskConfirmation = ({
                         <div className="question">Are you sure?</div>
                         <div className="action-description">
                             You are going to <span>{action}</span>{" "}
-                            <b>{selectedStudent}</b>
+                            <b>{selectedStudent.name}</b>
                         </div>
                         <div className="confirmation-btns">
-                            <Button varient="danger" onClick={handleDelete}>
-                                Delete
+                            <Button varient="danger" onClick={handleEvent}>
+                                {action}
                             </Button>
                             <Button varient="secondary" onClick={handleCancel}>
                                 Cancel

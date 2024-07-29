@@ -10,7 +10,8 @@ import ConfirmationBox from "./ConfirmationBox.jsx";
 function StudentsList({ students, setStudents }) {
     const [studentRole, setStudentRole] = useState("student");
     const [newStudentNameInput, setNewStudentInput] = useState("");
-    const [selectedStudent, setSelectedStudent] = useState("");
+    const [selectedStudent, setSelectedStudent] = useState({});
+    const [action, setAction] = useState("");
     let studentCount = 0;
     students.map((item) => {
         item.role == studentRole ? studentCount++ : studentCount;
@@ -27,14 +28,20 @@ function StudentsList({ students, setStudents }) {
     });
     console.log(students);
 
-    const AskConfirmationToDeleteUser = (studentName) => {
+    const AskConfirmationToDeleteUser = (studentName, index) => {
         document.getElementById("confirmation").style.display = "block";
-        setSelectedStudent(studentName);
+        setSelectedStudent({ name: studentName, index: index });
+        setAction("delete");
     };
 
-    const AskConfirmationToMoveUser = (studentName) => {
+    const AskConfirmationToMoveUser = (studentName, index) => {
         document.getElementById("confirmation").style.display = "block";
-        setSelectedStudent(studentName);
+        setSelectedStudent({ name: studentName, index: index });
+        setAction("move");
+    };
+    const handleDelete = () => {
+        deleteStudent(students, setStudents, selectedStudent);
+        document.getElementById("confirmation").style.display = "none";
     };
 
     const addNewStudent = (gender) => {
@@ -54,6 +61,7 @@ function StudentsList({ students, setStudents }) {
                 selectedStudent={selectedStudent}
                 students={students}
                 setStudents={setStudents}
+                action={action}
             />
             <AddStudentMenu
                 addNewStudent={addNewStudent}
@@ -131,11 +139,9 @@ function StudentsList({ students, setStudents }) {
                                                             name="role"
                                                             id="role"
                                                             onChange={(e) => {
-                                                                updateStudentRole(
-                                                                    e,
-                                                                    i,
-                                                                    students,
-                                                                    setStudents
+                                                                AskConfirmationToMoveUser(
+                                                                    item.name,
+                                                                    i
                                                                 );
                                                             }}
                                                         >
@@ -171,7 +177,8 @@ function StudentsList({ students, setStudents }) {
                                                 className="deleteBtn"
                                                 onClick={() => {
                                                     AskConfirmationToDeleteUser(
-                                                        item.name
+                                                        item.name,
+                                                        i
                                                     );
                                                 }}
                                             ></button>
