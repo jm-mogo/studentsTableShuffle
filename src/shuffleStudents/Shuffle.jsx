@@ -24,17 +24,23 @@ function Shuffle({ students }) {
     };
 
     const sortTablesByGender = (tables) => {
+        console.log(tables);
         tables.forEach((table) => {
             table.sort(function (a, b) {
-                if (a.role === "supervisor") {
-                    return 0;
+                console.log(a, b);
+                if (a.role == "supervisor") {
+                    return -1;
+                }
+                if (b.role == "supervisor") {
+                    return 1;
                 }
                 if (a.gender > b.gender) {
                     return -1;
                 }
                 if (b.gender < a.gender) {
-                    return 1;
+                    return 0;
                 }
+
                 return 0;
             });
         });
@@ -81,10 +87,20 @@ function Shuffle({ students }) {
     };
 
     const moveStudent = (e, studentTable, studentIndex) => {
-        console.log(e.target.value, studentTable, studentIndex);
+        // console.log(e.target.value, studentTable, studentIndex);
         let newTables = [...tables];
         let tableToMove = e.target.value;
         let newStudent = newTables[studentTable].splice(studentIndex, 1);
+        console.log(newStudent[0].role);
+        if (newStudent[0].role == "supervisor") {
+            let newSupervisor;
+            newTables[tableToMove - 1].forEach((student, i) => {
+                if (student.role == "supervisor") {
+                    newSupervisor = newTables[tableToMove - 1].splice(i, 1);
+                    newTables[studentTable].unshift(...newSupervisor);
+                }
+            });
+        }
         newTables[tableToMove - 1].unshift(...newStudent);
         e.target.value = studentTable + 1;
         sortTablesByGender(newTables);
