@@ -24,10 +24,8 @@ function Shuffle({ students }) {
     };
 
     const sortTablesByGender = (tables) => {
-        console.log(tables);
         tables.forEach((table) => {
             table.sort(function (a, b) {
-                console.log(a, b);
                 if (a.role == "supervisor") {
                     return -1;
                 }

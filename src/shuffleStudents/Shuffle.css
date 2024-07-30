@@ -1,5 +1,6 @@
 li {
     list-style: none;
+    padding: 2px;
 }
 
 .input-tables-section {
@@ -11,16 +12,16 @@ li {
 
 .tables-section {
     margin-top: 20px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fill, 300px);
     gap: 16px;
     margin-bottom: 100px;
     justify-content: center;
 }
 
 .table {
-    width: 300px;
+    /* width: 300px; */
     border: 1px solid #999;
     border-radius: 10px;
     padding: 24px
@@ -35,7 +36,6 @@ li {
     display: flex;
     width: 100%;
     justify-content: space-between;
-   
 }
 
 .boy {

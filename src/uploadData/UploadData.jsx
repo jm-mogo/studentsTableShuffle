@@ -16,6 +16,11 @@ const UploadData = ({ students, setStudents }) => {
             .split("\n")
             .map((item) => item.split(splitter));
 
+        keys.forEach((key, i) => {
+            keys[i] = key.trim();
+            console.log(key);
+        });
+
         const formedArr = rest.map((item) => {
             const object = {};
             keys.forEach((key, index) => (object[key] = item.at(index)));
@@ -39,6 +44,9 @@ const UploadData = ({ students, setStudents }) => {
         reader.onload = function (e) {
             // Access to content with e.target.result
             const csvArray = csvToArr(e.target.result, ",");
+            csvArray.forEach((student) => {
+                student.gender = student.gender[0];
+            });
             setStudents(csvArray);
         };
 
