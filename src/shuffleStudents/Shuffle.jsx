@@ -6,13 +6,27 @@ import {
     Document,
     StyleSheet,
     PDFViewer,
+    Font,
 } from "@react-pdf/renderer";
 // import { isCompositeComponent } from "react-dom/test-utils";
 
+Font.register({
+    family: "Open Sans",
+    fonts: [
+        {
+            src: "https://cdn.jsdelivr.net/npm/open-sans-all@0.1.3/fonts/open-sans-regular.ttf",
+        },
+        {
+            src: "https://cdn.jsdelivr.net/npm/open-sans-all@0.1.3/fonts/open-sans-600.ttf",
+            fontWeight: 600,
+        },
+    ],
+});
 const styles = StyleSheet.create({
     page: {
         flexDirection: "column",
         padding: 40,
+        fontFamily: "Open Sans",
         // alignItems: "center",
     },
     title: {
@@ -23,20 +37,20 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap: "wrap",
         width: "100%",
-        gap: 52,
+        gap: 10,
+    },
+    table: {
+        width: "22%",
     },
     textH: {
-        fontWeight: "bold",
         fontSize: 22,
     },
     textB: {
         fontSize: 14,
-        fontWeight: "normal",
     },
     textS: {
-        color: "darkblue",
+        fontWeight: "bold",
         fontSize: 14,
-        fontWeight: "extrabold",
     },
     allTables: {
         flexDirection: "row",
@@ -81,58 +95,77 @@ const styles = StyleSheet.create({
     column1: {
         marginLeft: 4,
         justifyContent: "center",
-        width: "10%",
+        width: "5%",
         height: "100%",
         borderColor: "black",
         borderStyle: "solid",
         borderRight: 1,
+        fontWeight: "bold",
+    },
+    column1Number: {
+        marginLeft: 4,
+        justifyContent: "center",
+        width: "5%",
+        height: "100%",
+        borderColor: "black",
+        borderStyle: "solid",
+        borderRight: 1,
+        fontSize: 12,
     },
     column2: {
         marginLeft: 4,
         justifyContent: "center",
-        width: "35%",
+        width: "50%",
         height: "100%",
         borderColor: "black",
-
+        fontWeight: "bold",
         borderStyle: "solid",
         borderRight: 1,
     },
     column2Student: {
         marginLeft: 4,
         justifyContent: "center",
-        width: "35%",
+        width: "50%",
         height: "100%",
         borderColor: "black",
-        fontSize: 11,
+        fontSize: 12,
         borderStyle: "solid",
         borderRight: 1,
     },
     column3: {
-        marginLeft: 4,
         justifyContent: "center",
-        width: "20%",
+        alignItems: "center",
+        width: "15%",
         height: "100%",
-        fontSize: 12,
+        fontSize: 10,
+        fontWeight: "bold",
         borderColor: "black",
         borderStyle: "solid",
         borderRight: 1,
     },
     column4: {
-        marginLeft: 4,
+        alignItems: "center",
         justifyContent: "center",
         width: "15%",
         height: "100%",
-        fontSize: 12,
+        fontSize: 10,
+        fontWeight: "bold",
         borderColor: "black",
         borderStyle: "solid",
         borderRight: 1,
     },
     column5: {
-        marginLeft: 4,
+        alignItems: "center",
         justifyContent: "center",
-        width: "20%",
+        width: "15%",
         height: "100%",
+        fontSize: 10,
+        fontWeight: "bold",
+    },
+    bold: {
+        fontWeight: "bold",
         fontSize: 12,
+        // color: "blue",
     },
 });
 
@@ -154,7 +187,7 @@ const MyDocument = ({ tables }) => (
                             <View style={styles.columnTable}>
                                 <View style={styles.rowTable}>
                                     <View style={styles.column1}>
-                                        <Text>No</Text>
+                                        <Text>N</Text>
                                     </View>
                                     <View style={styles.column2}>
                                         <Text>Nombre</Text>
@@ -173,11 +206,17 @@ const MyDocument = ({ tables }) => (
                             <View style={styles.columnTable}>
                                 {table.map((student, index) => (
                                     <View style={styles.rowTable}>
-                                        <View style={styles.column1}>
+                                        <View style={styles.column1Number}>
                                             <Text>{index + 1}</Text>
                                         </View>
                                         <View style={styles.column2Student}>
-                                            <Text>{student.name}</Text>
+                                            {student.role == "supervisor" ? (
+                                                <Text style={styles.bold}>
+                                                    {student.name}
+                                                </Text>
+                                            ) : (
+                                                <Text>{student.name}</Text>
+                                            )}
                                         </View>
                                         <View style={styles.column3}></View>
                                         <View style={styles.column4}></View>
@@ -196,7 +235,7 @@ const MyDocument = ({ tables }) => (
             <View style={styles.list}>
                 {tables.map((table, index) => (
                     <View style={styles.table} wrap={false}>
-                        <Text style={styles.textH}>table {index + 1}</Text>
+                        <Text style={styles.textH}>Table {index + 1}</Text>
                         {table.map((student) => {
                             if (student.gender === "M") {
                                 return student.role == "supervisor" ? (
