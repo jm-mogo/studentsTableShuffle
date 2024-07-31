@@ -180,7 +180,7 @@ const MyDocument = ({ tables }) => (
                         </Text>
                         <View style={styles.headerTable}>
                             <Text>Mesa {index + 1}</Text>
-                            <Text>Dia________</Text>
+                            <Text>Día________</Text>
                             <Text>Fecha___/___/___/</Text>
                         </View>
                         <View style={styles.tableContent}>
