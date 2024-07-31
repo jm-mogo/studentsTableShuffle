@@ -1,5 +1,245 @@
 import { useState } from "react";
+import {
+    Page,
+    Text,
+    View,
+    Document,
+    StyleSheet,
+    PDFViewer,
+} from "@react-pdf/renderer";
 // import { isCompositeComponent } from "react-dom/test-utils";
+
+const styles = StyleSheet.create({
+    page: {
+        flexDirection: "column",
+        padding: 40,
+        // alignItems: "center",
+    },
+    title: {
+        fontSize: 32,
+        marginBottom: 10,
+    },
+    list: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+        width: "100%",
+        gap: 52,
+    },
+    textH: {
+        fontWeight: "bold",
+        fontSize: 22,
+    },
+    textB: {
+        fontSize: 14,
+        fontWeight: "normal",
+    },
+    textS: {
+        color: "darkblue",
+        fontSize: 14,
+        fontWeight: "extrabold",
+    },
+    allTables: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+
+        // height: "100%",
+    },
+    tableContainer: {
+        width: "50%",
+        alignItems: "center",
+        height: 500,
+    },
+    titleTable: {
+        marginBottom: 24,
+    },
+    headerTable: {
+        flexDirection: "row",
+        gap: "20",
+        marginBottom: 10,
+    },
+    tableContent: {
+        borderColor: "black",
+        borderStyle: "solid",
+        borderWidth: 1,
+        width: "90%",
+        borderBottom: 0,
+        // height: "90%",
+    },
+    columnTable: {
+        width: "100%",
+    },
+    rowTable: {
+        flexDirection: "row",
+        width: "100%",
+        height: 30,
+        textAlign: "left",
+        // alignContent: "center",
+        borderColor: "black",
+        borderStyle: "solid",
+        borderBottom: 1,
+    },
+    column1: {
+        marginLeft: 4,
+        justifyContent: "center",
+        width: "10%",
+        height: "100%",
+        borderColor: "black",
+        borderStyle: "solid",
+        borderRight: 1,
+    },
+    column2: {
+        marginLeft: 4,
+        justifyContent: "center",
+        width: "35%",
+        height: "100%",
+        borderColor: "black",
+
+        borderStyle: "solid",
+        borderRight: 1,
+    },
+    column2Student: {
+        marginLeft: 4,
+        justifyContent: "center",
+        width: "35%",
+        height: "100%",
+        borderColor: "black",
+        fontSize: 11,
+        borderStyle: "solid",
+        borderRight: 1,
+    },
+    column3: {
+        marginLeft: 4,
+        justifyContent: "center",
+        width: "20%",
+        height: "100%",
+        fontSize: 12,
+        borderColor: "black",
+        borderStyle: "solid",
+        borderRight: 1,
+    },
+    column4: {
+        marginLeft: 4,
+        justifyContent: "center",
+        width: "15%",
+        height: "100%",
+        fontSize: 12,
+        borderColor: "black",
+        borderStyle: "solid",
+        borderRight: 1,
+    },
+    column5: {
+        marginLeft: 4,
+        justifyContent: "center",
+        width: "20%",
+        height: "100%",
+        fontSize: 12,
+    },
+});
+
+const MyDocument = ({ tables }) => (
+    <Document>
+        <Page size="A4" style={styles.page} orientation="landscape">
+            <View style={styles.allTables}>
+                {tables.map((table, index) => (
+                    <View style={styles.tableContainer} wrap={false}>
+                        <Text style={styles.titleTable}>
+                            LISTA DE ASISTENCIA COMEDOR
+                        </Text>
+                        <View style={styles.headerTable}>
+                            <Text>Mesa {index + 1}</Text>
+                            <Text>Dia________</Text>
+                            <Text>Fecha___/___/___/</Text>
+                        </View>
+                        <View style={styles.tableContent}>
+                            <View style={styles.columnTable}>
+                                <View style={styles.rowTable}>
+                                    <View style={styles.column1}>
+                                        <Text>No</Text>
+                                    </View>
+                                    <View style={styles.column2}>
+                                        <Text>Nombre</Text>
+                                    </View>
+                                    <View style={styles.column3}>
+                                        <Text>Desayuno</Text>
+                                    </View>
+                                    <View style={styles.column4}>
+                                        <Text>Comida</Text>
+                                    </View>
+                                    <View style={styles.column5}>
+                                        <Text>Cena</Text>
+                                    </View>
+                                </View>
+                            </View>
+                            <View style={styles.columnTable}>
+                                {table.map((student, index) => (
+                                    <View style={styles.rowTable}>
+                                        <View style={styles.column1}>
+                                            <Text>{index + 1}</Text>
+                                        </View>
+                                        <View style={styles.column2Student}>
+                                            <Text>{student.name}</Text>
+                                        </View>
+                                        <View style={styles.column3}></View>
+                                        <View style={styles.column4}></View>
+                                        <View style={styles.column5}></View>
+                                    </View>
+                                ))}
+                            </View>
+                        </View>
+                    </View>
+                ))}
+            </View>
+
+            <Text break style={styles.title}>
+                Hombres
+            </Text>
+            <View style={styles.list}>
+                {tables.map((table, index) => (
+                    <View style={styles.table} wrap={false}>
+                        <Text style={styles.textH}>table {index + 1}</Text>
+                        {table.map((student) => {
+                            if (student.gender === "M") {
+                                return student.role == "supervisor" ? (
+                                    <p style={styles.textS}>
+                                        <Text>{student.name}</Text>
+                                    </p>
+                                ) : (
+                                    <Text style={styles.textB}>
+                                        {student.name}
+                                    </Text>
+                                );
+                            }
+                        })}
+                    </View>
+                ))}
+            </View>
+
+            <Text style={styles.title} break>
+                Mujeres
+            </Text>
+            <View style={styles.list}>
+                {tables.map((table, index) => (
+                    <View style={styles.table} wrap={false}>
+                        <Text style={styles.textH}>table {index + 1}</Text>
+                        {table.map((student) => {
+                            if (student.gender === "F") {
+                                return student.role == "supervisor" ? (
+                                    <p style={styles.textS}>
+                                        <Text>{student.name}</Text>
+                                    </p>
+                                ) : (
+                                    <Text style={styles.textB}>
+                                        {student.name}
+                                    </Text>
+                                );
+                            }
+                        })}
+                    </View>
+                ))}
+            </View>
+        </Page>
+    </Document>
+);
 
 function Shuffle({ students }) {
     const Supervisors = students.filter(
@@ -107,6 +347,9 @@ function Shuffle({ students }) {
 
     return (
         <>
+            <PDFViewer>
+                <MyDocument tables={tables} />
+            </PDFViewer>
             <h1>There are {Supervisors.length} supervisors</h1>
             <div className="input-tables-section">
                 <label htmlFor="">Ammount of tables</label>
