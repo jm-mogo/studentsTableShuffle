@@ -1,5 +1,4 @@
-import * as React from "react";
-
+import { useState } from "react";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
@@ -47,9 +46,7 @@ const StudentTable = ({ students, setStudents }) => {
         student.id = index;
     });
     console.log(students);
-    const initialRows = students;
-    // const [rows, setRows] = React.useState(initialRows);
-    const [rowModesModel, setRowModesModel] = React.useState({});
+    const [rowModesModel, setRowModesModel] = useState({});
 
     const handleRowEditStop = (params, event) => {
         if (params.reason === GridRowEditStopReasons.rowFocusOut) {
@@ -175,23 +172,36 @@ const StudentTable = ({ students, setStudents }) => {
     ];
 
     return (
-        <DataGrid
-            rows={students}
-            columns={columns}
-            checkboxSelection
-            disableRowSelectionOnClick
-            editMode="row"
-            rowModesModel={rowModesModel}
-            onRowModesModelChange={handleRowModesModelChange}
-            onRowEditStop={handleRowEditStop}
-            processRowUpdate={processRowUpdate}
-            slots={{
-                toolbar: EditToolbar,
+        <Box
+            sx={{
+                height: 500,
+                width: "100%",
+                "& .actions": {
+                    color: "text.secondary",
+                },
+                "& .textPrimary": {
+                    color: "text.primary",
+                },
             }}
-            slotProps={{
-                toolbar: { setStudents, setRowModesModel },
-            }}
-        />
+        >
+            <DataGrid
+                rows={students}
+                columns={columns}
+                checkboxSelection
+                disableRowSelectionOnClick
+                editMode="row"
+                rowModesModel={rowModesModel}
+                onRowModesModelChange={handleRowModesModelChange}
+                onRowEditStop={handleRowEditStop}
+                processRowUpdate={processRowUpdate}
+                slots={{
+                    toolbar: EditToolbar,
+                }}
+                slotProps={{
+                    toolbar: { setStudents, setRowModesModel },
+                }}
+            />
+        </Box>
     );
 };
 
