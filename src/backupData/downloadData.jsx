@@ -1,4 +1,9 @@
 function downloadData(students) {
+    students.map((student) => {
+        delete student.id;
+        delete student.isNew;
+    });
+
     const csvmaker = function (data) {
         const csvRows = [];
 
