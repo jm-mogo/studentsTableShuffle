@@ -41,7 +41,11 @@ function EditToolbar(props) {
     );
 }
 
-const StudentTable = ({ students, setStudents }) => {
+const StudentTable = ({
+    students,
+    setStudents,
+    AskConfirmationToDeleteUser,
+}) => {
     students.map((student, index) => {
         student.id = index;
     });
@@ -69,7 +73,8 @@ const StudentTable = ({ students, setStudents }) => {
     };
 
     const handleDeleteClick = (id) => () => {
-        setStudents(students.filter((student) => student.id !== id));
+        AskConfirmationToDeleteUser(students[id].name, id);
+        // setStudents(students.filter((student) => student.id !== id));
     };
 
     const handleCancelClick = (id) => () => {
@@ -128,7 +133,7 @@ const StudentTable = ({ students, setStudents }) => {
             headerName: "Actions",
             width: 100,
             cellClassName: "actions",
-            getActions: ({ id }) => {
+            getActions: ({ id, name }) => {
                 const isInEditMode =
                     rowModesModel[id]?.mode === GridRowModes.Edit;
 
@@ -163,7 +168,7 @@ const StudentTable = ({ students, setStudents }) => {
                     <GridActionsCellItem
                         icon={<DeleteIcon />}
                         label="Delete"
-                        onClick={handleDeleteClick(id)}
+                        onClick={handleDeleteClick(id, name)}
                         color="inherit"
                     />,
                 ];

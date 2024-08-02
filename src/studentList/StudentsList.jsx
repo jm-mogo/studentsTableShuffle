@@ -35,16 +35,6 @@ function StudentsList({ students, setStudents }) {
         setAction("delete");
     };
 
-    const AskConfirmationToMoveUser = (studentName, index) => {
-        document.getElementById("confirmation").style.display = "block";
-        setSelectedStudent({ name: studentName, index: index });
-        setAction("move");
-    };
-    const handleDelete = () => {
-        deleteStudent(students, setStudents, selectedStudent);
-        document.getElementById("confirmation").style.display = "none";
-    };
-
     const addNewStudent = (gender) => {
         addStudent(
             students,
@@ -105,7 +95,11 @@ function StudentsList({ students, setStudents }) {
             <h2 className="subTitle">
                 There are {studentCount} {studentRole}s
             </h2>
-            <StudentTable students={students} setStudents={setStudents} />
+            <StudentTable
+                students={students}
+                setStudents={setStudents}
+                AskConfirmationToDeleteUser={AskConfirmationToDeleteUser}
+            />
         </div>
     );
 }
