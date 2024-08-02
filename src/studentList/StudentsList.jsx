@@ -16,7 +16,7 @@ function StudentsList({ students, setStudents }) {
     const [action, setAction] = useState("");
     let studentCount = 0;
     students.map((item) => {
-        item.role == studentRole ? studentCount++ : studentCount;
+        item.role == studentRole ? studentCount++ : studentCount++;
     });
 
     // students.sort(function (a, b) {

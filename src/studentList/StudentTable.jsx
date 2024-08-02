@@ -1,10 +1,16 @@
 import { useState } from "react";
 import Button from "@mui/material/Button";
+import ButtonOwn from "../ButtonOwn.jsx";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import {
     GridRowModes,
     DataGrid,
@@ -13,6 +19,73 @@ import {
     GridRowEditStopReasons,
 } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
+
+function AlertDialog({
+    students,
+    setStudents,
+    rowSelectionModel,
+    setRowSelectionModel,
+}) {
+    const handleClick = () => {
+        let newStudents = [...students];
+        rowSelectionModel.map((id) => {
+            newStudents = newStudents.filter((student) => student.id !== id);
+        });
+        setStudents(newStudents);
+        setRowSelectionModel([]);
+    };
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleDelete = () => {
+        handleClick();
+        handleClose();
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    return (
+        <>
+            <Button
+                color="primary"
+                startIcon={<DeleteIcon />}
+                variant="outlined"
+                onClick={handleClickOpen}
+            >
+                Delete Selected students
+            </Button>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"Are you sure?"}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        You are going to delete {rowSelectionModel.length}{" "}
+                        students
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <ButtonOwn varient="danger" onClick={handleDelete}>
+                        Delete
+                    </ButtonOwn>
+                    <ButtonOwn varient="secondary" onClick={handleClose}>
+                        Cancel
+                    </ButtonOwn>
+                </DialogActions>
+            </Dialog>
+        </>
+    );
+}
 
 function EditToolbar(props) {
     const { setStudents, setRowModesModel } = props;
@@ -41,6 +114,39 @@ function EditToolbar(props) {
     );
 }
 
+function deleteMuliple(props) {
+    const { students, setStudents, rowSelectionModel, setRowSelectionModel } =
+        props;
+
+    const handleClick = () => {
+        let newStudents = [...students];
+        rowSelectionModel.map((id) => {
+            newStudents = newStudents.filter((student) => student.id !== id);
+        });
+        setStudents(newStudents);
+        setRowSelectionModel([]);
+    };
+
+    if (rowSelectionModel.length > 0)
+        return (
+            <GridToolbarContainer>
+                <AlertDialog
+                    students={students}
+                    setStudents={setStudents}
+                    rowSelectionModel={rowSelectionModel}
+                    setRowSelectionModel={setRowSelectionModel}
+                />
+                {/* <Button
+                    color="primary"
+                    startIcon={<DeleteIcon />}
+                    onClick={handleClick}
+                >
+                    Delete Selected Students
+                </Button> */}
+            </GridToolbarContainer>
+        );
+}
+
 const StudentTable = ({
     students,
     setStudents,
@@ -49,8 +155,10 @@ const StudentTable = ({
     students.map((student, index) => {
         student.id = index;
     });
-    console.log(students);
     const [rowModesModel, setRowModesModel] = useState({});
+    const [rowSelectionModel, setRowSelectionModel] = useState([]);
+
+    console.log(rowSelectionModel);
 
     const handleRowEditStop = (params, event) => {
         if (params.reason === GridRowEditStopReasons.rowFocusOut) {
@@ -193,6 +301,10 @@ const StudentTable = ({
                 rows={students}
                 columns={columns}
                 checkboxSelection
+                onRowSelectionModelChange={(newRowSelectionModel) => {
+                    setRowSelectionModel(newRowSelectionModel);
+                }}
+                rowSelectionModel={rowSelectionModel}
                 disableRowSelectionOnClick
                 editMode="row"
                 rowModesModel={rowModesModel}
@@ -201,9 +313,15 @@ const StudentTable = ({
                 processRowUpdate={processRowUpdate}
                 slots={{
                     toolbar: EditToolbar,
+                    toolbar: deleteMuliple,
                 }}
                 slotProps={{
-                    toolbar: { setStudents, setRowModesModel },
+                    toolbar: {
+                        students,
+                        setStudents,
+                        rowSelectionModel,
+                        setRowSelectionModel,
+                    },
                 }}
             />
         </Box>

@@ -1,5 +1,5 @@
 import deleteStudent from "./deleteStudent";
-import Button from "../Button";
+import Button from "../ButtonOwn";
 import updateStudentRole from "./updateStudentRole";
 
 const AskConfirmation = ({
