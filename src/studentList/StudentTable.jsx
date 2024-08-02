@@ -118,15 +118,6 @@ function deleteMuliple(props) {
     const { students, setStudents, rowSelectionModel, setRowSelectionModel } =
         props;
 
-    const handleClick = () => {
-        let newStudents = [...students];
-        rowSelectionModel.map((id) => {
-            newStudents = newStudents.filter((student) => student.id !== id);
-        });
-        setStudents(newStudents);
-        setRowSelectionModel([]);
-    };
-
     if (rowSelectionModel.length > 0)
         return (
             <GridToolbarContainer>
