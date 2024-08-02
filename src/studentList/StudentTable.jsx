@@ -52,7 +52,7 @@ function AlertDialog({
     return (
         <>
             <Button
-                color="primary"
+                color="error"
                 startIcon={<DeleteIcon />}
                 variant="outlined"
                 onClick={handleClickOpen}
@@ -130,19 +130,13 @@ function deleteMuliple(props) {
     if (rowSelectionModel.length > 0)
         return (
             <GridToolbarContainer>
+                <Box sx={{ flexGrow: 1 }} />
                 <AlertDialog
                     students={students}
                     setStudents={setStudents}
                     rowSelectionModel={rowSelectionModel}
                     setRowSelectionModel={setRowSelectionModel}
                 />
-                {/* <Button
-                    color="primary"
-                    startIcon={<DeleteIcon />}
-                    onClick={handleClick}
-                >
-                    Delete Selected Students
-                </Button> */}
             </GridToolbarContainer>
         );
 }
