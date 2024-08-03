@@ -11,8 +11,31 @@ import "./studentList/addStudent.css";
 import "./shuffleStudents/Shuffle.css";
 import "./backupData/BackupData.css";
 import "./uploadData/UploadData.css";
+import { useAuth } from "./context/authContext.jsx";
+import { Avatar, Button, Box, IconButton, Menu } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import AvatarMenu from "./AvatarMenu.jsx";
 
 function App() {
+    const { user, logout, loading } = useAuth();
+    const navigate = useNavigate();
+    console.log(user);
+    if (!user) {
+        navigate("/login");
+    }
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    if (loading) {
+        return <h1>LOADING...</h1>;
+    }
+
     const [students, setStudents] = useState(data);
     const [menuSelection, setMenuSelection] = useState("students");
     const get = async function () {
@@ -47,10 +70,19 @@ function App() {
         }
     }
 
+    console.log(user);
+
     return (
         <>
             <header>
+                <Box></Box>
                 <h1>School cafeteria manager</h1>
+
+                <AvatarMenu user={user} handleLogout={handleLogout} />
+
+                {/* <Button variant="contained" onClick={handleLogout}>
+                    Logout
+                </Button> */}
             </header>
             <main>
                 <aside>
