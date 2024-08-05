@@ -21,6 +21,7 @@ const AvatarMenu = ({ user, handleLogout }) => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
     return (
         <>
             <IconButton
@@ -31,9 +32,10 @@ const AvatarMenu = ({ user, handleLogout }) => {
                 aria-haspopup="true"
                 aria-expanded={open ? "true" : undefined}
             >
-                <Avatar src={user.photoURL} sx={{ width: 48, height: 48 }}>
-                    M
-                </Avatar>
+                <Avatar
+                    src={user.photoURL}
+                    sx={{ width: 48, height: 48 }}
+                ></Avatar>
             </IconButton>
 
             <Menu

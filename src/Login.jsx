@@ -4,6 +4,7 @@ import { useAuth } from "./context/authContext";
 import { useNavigate, Link } from "react-router-dom";
 import { Alert, Container, Divider } from "@mui/material";
 import { setUserProperties } from "firebase/analytics";
+import GoogleIcon from "@mui/icons-material/Google";
 const Login = () => {
     const [user, setUser] = useState({
         email: "",
@@ -71,7 +72,11 @@ const Login = () => {
                     justifyContent="center"
                     sx={{ border: "1px solid grey" }}
                 >
-                    <Button variant="contained" onClick={handleGoogleSignin}>
+                    <Button
+                        startIcon={<GoogleIcon />}
+                        variant="contained"
+                        onClick={handleGoogleSignin}
+                    >
                         Google Login
                     </Button>
                     <div style={{ width: "200px" }}>

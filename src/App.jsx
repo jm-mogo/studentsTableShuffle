@@ -36,7 +36,7 @@ function App() {
         return <h1>LOADING...</h1>;
     }
 
-    const [students, setStudents] = useState(data);
+    const [students, setStudents] = useState([]);
     const [menuSelection, setMenuSelection] = useState("students");
     const get = async function () {
         downloadData(students);
@@ -79,10 +79,6 @@ function App() {
                 <h1>School cafeteria manager</h1>
 
                 <AvatarMenu user={user} handleLogout={handleLogout} />
-
-                {/* <Button variant="contained" onClick={handleLogout}>
-                    Logout
-                </Button> */}
             </header>
             <main>
                 <aside>

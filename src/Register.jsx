@@ -38,7 +38,7 @@ const Register = () => {
                     flexDirection: "column",
                     justifyContent: "center",
                     alignContent: "center",
-                    width: "100vh",
+                    width: "100vw",
                     marginTop: "15vh",
                     gap: 8,
                     // height: "100vh",
