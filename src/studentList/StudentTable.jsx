@@ -143,8 +143,6 @@ const StudentTable = ({
     const [rowModesModel, setRowModesModel] = useState({});
     const [rowSelectionModel, setRowSelectionModel] = useState([]);
 
-    console.log(rowSelectionModel);
-
     const handleRowEditStop = (params, event) => {
         if (params.reason === GridRowEditStopReasons.rowFocusOut) {
             event.defaultMuiPrevented = true;
@@ -297,7 +295,6 @@ const StudentTable = ({
                 onRowEditStop={handleRowEditStop}
                 processRowUpdate={processRowUpdate}
                 slots={{
-                    toolbar: EditToolbar,
                     toolbar: deleteMuliple,
                 }}
                 slotProps={{
