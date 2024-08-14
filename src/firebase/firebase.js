@@ -30,9 +30,8 @@ const dbRef = ref(getDatabase());
 // const dataString = JSON.stringify(data);
 
 export const updataStudentsListData = (newStudentList, user) => {
-    console.log(user.uid);
     set(ref(db, `Users/${user.uid}`), {
-        name: "me",
+        name: user.displayName,
         studentsList: JSON.stringify(newStudentList),
     });
 };
