@@ -1,6 +1,5 @@
 import deleteStudent from "./deleteStudent";
 import Button from "../ButtonOwn";
-import updateStudentRole from "./updateStudentRole";
 
 const AskConfirmation = ({
     students,

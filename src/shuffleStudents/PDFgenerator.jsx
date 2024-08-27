@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
         borderStyle: "solid",
         borderRight: 1,
         fontWeight: "bold",
+        fontSize: 12,
     },
     column1Number: {
         marginLeft: 4,
@@ -102,6 +103,7 @@ const styles = StyleSheet.create({
     },
     column2: {
         marginLeft: 4,
+        fontSize: 14,
         justifyContent: "center",
         width: "50%",
         height: "100%",
