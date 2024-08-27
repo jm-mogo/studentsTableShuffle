@@ -1,13 +1,8 @@
 import { useEffect, useState } from "react";
 import addStudent from "./addStudent.jsx";
-import deleteStudent from "./deleteStudent.jsx";
-import updateName from "./updateName.jsx";
-import editStudent from "./editStudent.jsx";
 import AddStudentMenu from "./AddStudentMenu.jsx";
-import updateStudentRole from "./updateStudentRole.jsx";
 import ConfirmationBox from "./ConfirmationBox.jsx";
 import StudentTable from "./StudentTable.jsx";
-import { ConstructionOutlined } from "@mui/icons-material";
 
 function StudentsList({ students, setStudents }) {
     const [newStudentNameInput, setNewStudentInput] = useState("");
