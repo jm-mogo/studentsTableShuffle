@@ -30,7 +30,7 @@ function AddStudentMenu({
         <div className="overlay" id="myNav">
             <div className="overlay-content">
                 <form action="none">
-                    <h2 className="titleNewStudent">New {studentRole}</h2>
+                    <h2 className="titleNewStudent">New student</h2>
                     <div className="input-new-student">
                         <label htmlFor="name">Name:</label>
                         <input
