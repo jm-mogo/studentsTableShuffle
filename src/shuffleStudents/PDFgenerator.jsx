@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
 });
 
 const PDFgenerator = ({ tables }) => (
-    <Document>
+    <Document title="Lista de estudiantes">
         <Page size="A4" style={styles.page} orientation="landscape">
             <View style={styles.allTables}>
                 {tables.map((table, index) => (

@@ -270,7 +270,7 @@ const StudentTable = ({
     return (
         <Box
             sx={{
-                height: 500,
+                height: "75vh",
                 width: "100%",
                 "& .actions": {
                     color: "text.secondary",

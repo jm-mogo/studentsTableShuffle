@@ -21,7 +21,7 @@ const AvatarMenu = ({ user, handleLogout }) => {
     const handleClose = () => {
         setAnchorEl(null);
     };
-
+    console.log(user.photoURL);
     return (
         <>
             <IconButton
