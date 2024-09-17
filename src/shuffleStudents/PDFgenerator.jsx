@@ -40,6 +40,27 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 14,
     },
+    noteAndSignature: {
+        width: "90%",
+        flexDirection: "row",
+    },
+    note: {
+        fontSize: 7,
+        width: "55%",
+        fontWeight: "bold",
+    },
+    signature: {
+        marginLeft: "3px",
+        width: "152px",
+        fontWeight: "bold",
+        fontSize: 9,
+        textAlign: "center",
+        borderColor: "black",
+        borderStyle: "solid",
+        borderRight: 1,
+        borderLeft: 1,
+        borderTop: 1,
+    },
     allTables: {
         flexDirection: "row",
         flexWrap: "wrap",
@@ -157,6 +178,14 @@ const styles = StyleSheet.create({
         fontSize: 12,
         // color: "blue",
     },
+    verse: {
+        marginTop: "5px",
+        width: "90%",
+        alignItems: "center",
+        textAlign: "center",
+        fontSize: 9,
+        // fontStyle: "italic",
+    },
 });
 
 const PDFgenerator = ({ tables }) => (
@@ -173,6 +202,18 @@ const PDFgenerator = ({ tables }) => (
                             <Text>Día________</Text>
                             <Text>Fecha___/___/___/</Text>
                         </View>
+                        <View style={styles.noteAndSignature}>
+                            <View style={styles.note}>
+                                <Text>
+                                    Cualquier duda o aclaracion con la hna. Lety
+                                    Aponte
+                                </Text>
+                            </View>
+                            <View style={styles.signature}>
+                                <Text>Firma</Text>
+                            </View>
+                        </View>
+
                         <View style={styles.tableContent}>
                             <View style={styles.columnTable}>
                                 <View style={styles.rowTable}>
@@ -214,6 +255,13 @@ const PDFgenerator = ({ tables }) => (
                                     </View>
                                 ))}
                             </View>
+                        </View>
+                        <View style={styles.verse}>
+                            <Text>
+                                Si, pues, coméis o bebéis, o hacéis otra cosa,
+                                hacedlo todo para la gloria de Dios
+                            </Text>
+                            <Text>1a de Corintios 10:31</Text>
                         </View>
                     </View>
                 ))}
