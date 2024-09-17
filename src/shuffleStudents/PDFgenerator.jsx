@@ -221,7 +221,7 @@ const PDFgenerator = ({ tables }) => (
                         <View style={styles.header}>
                             <Image
                                 style={styles.image}
-                                src="https://i.ibb.co/SVCDj6b/logo-Church.jpg"
+                                src="https://i.ibb.co/djftVTz/logo-church.png"
                             />
                             <Text style={styles.title}>
                                 LISTA DE ASISTENCIA COMEDOR
