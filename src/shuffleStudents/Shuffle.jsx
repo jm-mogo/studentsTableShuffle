@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { PDFViewer } from "@react-pdf/renderer";
 import PDFgenerator from "./PDFgenerator.jsx";
+import { TabUnselected } from "@mui/icons-material";
 // import { isCompositeComponent } from "react-dom/test-utils";
 
 function Shuffle({ students }) {
@@ -28,22 +29,38 @@ function Shuffle({ students }) {
     const sortTablesByGender = (tables) => {
         tables.forEach((table) => {
             table.sort(function (a, b) {
-                if (a.role == "supervisor") {
+                if (a.name < b.name) {
                     return -1;
                 }
-                if (b.role == "supervisor") {
+                if (b.name > a.name) {
                     return 1;
                 }
+                return 0;
+            });
+
+            table.sort(function (a, b) {
                 if (a.gender > b.gender) {
                     return -1;
                 }
                 if (b.gender < a.gender) {
                     return 0;
                 }
-
                 return 0;
             });
+
+            console.log(table);
         });
+        // tables.forEach((table) => {
+        //     table.sort(function (a, b) {
+        //         if (a.gender > b.gender) {
+        //             return -1;
+        //         }
+        //         if (b.gender < a.gender) {
+        //             return 0;
+        //         }
+        //         return 0;
+        //     });
+        // });
     };
 
     const shuffleStudents = () => {
