@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
         width: "22%",
     },
     textH: {
+        color: "red",
         fontSize: 22,
     },
     textB: {
