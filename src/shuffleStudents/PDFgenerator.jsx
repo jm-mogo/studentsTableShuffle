@@ -1,3 +1,14 @@
+import {
+    Page,
+    Text,
+    View,
+    Document,
+    StyleSheet,
+    PDFViewer,
+    Font,
+    Image,
+} from "@react-pdf/renderer";
+
 Font.register({
     family: "Open Sans",
     fonts: [
@@ -17,9 +28,20 @@ const styles = StyleSheet.create({
         fontFamily: "Open Sans",
         // alignItems: "center",
     },
+    header: {
+        width: "90%",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
     title: {
-        fontSize: 32,
-        marginBottom: 10,
+        width: "50%",
+        fontSize: 16,
+        fontWeight: "bold",
+        textAlign: "center",
+    },
+    image: {
+        height: "40px",
     },
     list: {
         flexDirection: "row",
@@ -74,7 +96,8 @@ const styles = StyleSheet.create({
         height: 500,
     },
     titleTable: {
-        marginBottom: 24,
+        fontSize: 32,
+        marginBottom: 10,
     },
     headerTable: {
         flexDirection: "row",
@@ -195,9 +218,16 @@ const PDFgenerator = ({ tables }) => (
             <View style={styles.allTables}>
                 {tables.map((table, index) => (
                     <View style={styles.tableContainer} wrap={false}>
-                        <Text style={styles.titleTable}>
-                            LISTA DE ASISTENCIA COMEDOR
-                        </Text>
+                        <View style={styles.header}>
+                            <Image
+                                style={styles.image}
+                                src="https://i.ibb.co/SVCDj6b/logo-Church.jpg"
+                            />
+                            <Text style={styles.title}>
+                                LISTA DE ASISTENCIA COMEDOR
+                            </Text>
+                        </View>
+
                         <View style={styles.headerTable}>
                             <Text>Mesa {index + 1}</Text>
                             <Text>Día________</Text>
@@ -214,7 +244,6 @@ const PDFgenerator = ({ tables }) => (
                                 <Text>Firma</Text>
                             </View>
                         </View>
-
                         <View style={styles.tableContent}>
                             <View style={styles.columnTable}>
                                 <View style={styles.rowTable}>
@@ -268,7 +297,7 @@ const PDFgenerator = ({ tables }) => (
                 ))}
             </View>
 
-            <Text break style={styles.title}>
+            <Text break style={styles.titleTable}>
                 Hombres
             </Text>
             <View style={styles.list}>
@@ -292,7 +321,7 @@ const PDFgenerator = ({ tables }) => (
                 ))}
             </View>
 
-            <Text style={styles.title} break>
+            <Text style={styles.titleTable} break>
                 Mujeres
             </Text>
             <View style={styles.list}>
@@ -318,14 +347,5 @@ const PDFgenerator = ({ tables }) => (
         </Page>
     </Document>
 );
-import {
-    Page,
-    Text,
-    View,
-    Document,
-    StyleSheet,
-    PDFViewer,
-    Font,
-} from "@react-pdf/renderer";
 
 export default PDFgenerator;
