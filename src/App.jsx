@@ -1,7 +1,10 @@
 import StudentsList from "./studentList/StudentsList.jsx";
 // import Supervisors from "./Supervisors.jsx";
 import { useState, useEffect } from "react";
-import data from "./data.json";
+import {
+    getStutudentsListData,
+    updataStudentsListData,
+} from "./firebase/firebase.js";
 import Shuffle from "./shuffleStudents/Shuffle.jsx";
 import BackupData from "./backupData/BackupData.jsx";
 import UploadData from "./uploadData/UploadData.jsx";
@@ -11,23 +14,54 @@ import "./studentList/addStudent.css";
 import "./shuffleStudents/Shuffle.css";
 import "./backupData/BackupData.css";
 import "./uploadData/UploadData.css";
+import { useAuth } from "./context/authContext.jsx";
+import { Avatar, Button, Box, IconButton, Menu } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import AvatarMenu from "./AvatarMenu.jsx";
+// import { database } from "./firebase/firebase.js";
 
 function App() {
-    const [students, setStudents] = useState(data);
-    const [menuSelection, setMenuSelection] = useState("students");
-    const get = async function () {
-        downloadData(students);
+    const { user, logout, loading } = useAuth();
+    const navigate = useNavigate();
+    if (!user) {
+        navigate("/login");
+    }
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+        } catch (error) {
+            console.error(error);
+        }
     };
 
-    useEffect(() => {
-        const studentsData = JSON.parse(localStorage.getItem("students"));
-        if (studentsData) {
-            setStudents(studentsData);
-        }
-    }, []);
+    if (loading) {
+        return <h1>LOADING...</h1>;
+    }
+
+    const [students, setStudents] = useState([]);
+    const [menuSelection, setMenuSelection] = useState("students");
 
     useEffect(() => {
-        localStorage.setItem("students", JSON.stringify(students));
+        const getData = async () => {
+            let data = await getStutudentsListData(user);
+            data = JSON.parse(data.studentsList);
+            setStudents(data);
+        };
+        getData();
+    }, []);
+
+    // useEffect(() => {
+    //     const studentsData = JSON.parse(localStorage.getItem("students"));
+    //     if (studentsData) {
+    //         setStudents(studentsData);
+    //     }
+    // }, []);
+
+    useEffect(() => {
+        if (students.length > 0) {
+            updataStudentsListData(students, user);
+        }
     }, [students]);
 
     function displayMain() {
@@ -50,7 +84,10 @@ function App() {
     return (
         <>
             <header>
+                <Box></Box>
                 <h1>School cafeteria manager</h1>
+
+                <AvatarMenu user={user} handleLogout={handleLogout} />
             </header>
             <main>
                 <aside>

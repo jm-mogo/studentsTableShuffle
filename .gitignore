@@ -23,4 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 
+<<<<<<< HEAD
+=======
+#local .env file
+>>>>>>> creatingLogging
 .env

@@ -1,33 +1,19 @@
 import { useEffect, useState } from "react";
 import addStudent from "./addStudent.jsx";
-import deleteStudent from "./deleteStudent.jsx";
-import updateName from "./updateName.jsx";
-import editStudent from "./editStudent.jsx";
 import AddStudentMenu from "./AddStudentMenu.jsx";
-import updateStudentRole from "./updateStudentRole.jsx";
 import ConfirmationBox from "./ConfirmationBox.jsx";
 import StudentTable from "./StudentTable.jsx";
-import { ConstructionOutlined } from "@mui/icons-material";
 
 function StudentsList({ students, setStudents }) {
-    const [studentRole, setStudentRole] = useState("student");
     const [newStudentNameInput, setNewStudentInput] = useState("");
     const [selectedStudent, setSelectedStudent] = useState({});
     const [action, setAction] = useState("");
-    let studentCount = 0;
-    students.map((item) => {
-        item.role == studentRole ? studentCount++ : studentCount++;
-    });
-
-    // students.sort(function (a, b) {
-    //     if (a.name < b.name) {
-    //         return -1;
-    //     }
-    //     if (b.name > a.name) {
-    //         return 1;
-    //     }
-    //     return 0;
-    // });
+    let studentCount = students.filter(
+        (student) => student.role == "student"
+    ).length;
+    let supervisorCount = students.filter(
+        (student) => student.role == "supervisor"
+    ).length;
 
     const AskConfirmationToDeleteUser = (studentName, index) => {
         document.getElementById("confirmation").style.display = "block";
@@ -36,13 +22,7 @@ function StudentsList({ students, setStudents }) {
     };
 
     const addNewStudent = (gender) => {
-        addStudent(
-            students,
-            setStudents,
-            newStudentNameInput,
-            studentRole,
-            gender
-        );
+        addStudent(students, setStudents, newStudentNameInput, gender);
         setNewStudentInput("");
     };
 
@@ -57,7 +37,6 @@ function StudentsList({ students, setStudents }) {
             <AddStudentMenu
                 addNewStudent={addNewStudent}
                 setNewStudentInput={setNewStudentInput}
-                studentRole={studentRole}
                 newStudentNameInput={newStudentNameInput}
             />
             <button
@@ -71,29 +50,8 @@ function StudentsList({ students, setStudents }) {
 
             <h1 className="title">Students list</h1>
 
-            {/* <div className="rolesBtn">
-                <button
-                    className={studentRole == "student" ? "selectedMenu" : ""}
-                    onClick={() => {
-                        setStudentRole("student");
-                    }}
-                >
-                    Students
-                </button>
-                <button
-                    className={
-                        studentRole == "supervisor" ? "selectedMenu" : ""
-                    }
-                    onClick={() => {
-                        setStudentRole("supervisor");
-                    }}
-                >
-                    Supervisors
-                </button>
-            </div> */}
-
             <h2 className="subTitle">
-                There are {studentCount} {studentRole}s
+                {studentCount} students, and {supervisorCount} supervisors
             </h2>
             <StudentTable
                 students={students}

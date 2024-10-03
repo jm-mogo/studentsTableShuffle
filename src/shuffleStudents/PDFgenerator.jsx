@@ -1,3 +1,14 @@
+import {
+    Page,
+    Text,
+    View,
+    Document,
+    StyleSheet,
+    PDFViewer,
+    Font,
+    Image,
+} from "@react-pdf/renderer";
+
 Font.register({
     family: "Open Sans",
     fonts: [
@@ -17,9 +28,20 @@ const styles = StyleSheet.create({
         fontFamily: "Open Sans",
         // alignItems: "center",
     },
+    header: {
+        width: "90%",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
     title: {
-        fontSize: 32,
-        marginBottom: 10,
+        width: "50%",
+        fontSize: 16,
+        fontWeight: "bold",
+        textAlign: "center",
+    },
+    image: {
+        height: "40px",
     },
     list: {
         flexDirection: "row",
@@ -31,6 +53,7 @@ const styles = StyleSheet.create({
         width: "22%",
     },
     textH: {
+        color: "red",
         fontSize: 22,
     },
     textB: {
@@ -39,6 +62,27 @@ const styles = StyleSheet.create({
     textS: {
         fontWeight: "bold",
         fontSize: 14,
+    },
+    noteAndSignature: {
+        width: "90%",
+        flexDirection: "row",
+    },
+    note: {
+        fontSize: 7,
+        width: "55%",
+        fontWeight: "bold",
+    },
+    signature: {
+        marginLeft: "3px",
+        width: "152px",
+        fontWeight: "bold",
+        fontSize: 9,
+        textAlign: "center",
+        borderColor: "black",
+        borderStyle: "solid",
+        borderRight: 1,
+        borderLeft: 1,
+        borderTop: 1,
     },
     allTables: {
         flexDirection: "row",
@@ -52,7 +96,8 @@ const styles = StyleSheet.create({
         height: 500,
     },
     titleTable: {
-        marginBottom: 24,
+        fontSize: 32,
+        marginBottom: 10,
     },
     headerTable: {
         flexDirection: "row",
@@ -89,6 +134,7 @@ const styles = StyleSheet.create({
         borderStyle: "solid",
         borderRight: 1,
         fontWeight: "bold",
+        fontSize: 12,
     },
     column1Number: {
         marginLeft: 4,
@@ -102,6 +148,7 @@ const styles = StyleSheet.create({
     },
     column2: {
         marginLeft: 4,
+        fontSize: 14,
         justifyContent: "center",
         width: "50%",
         height: "100%",
@@ -155,21 +202,47 @@ const styles = StyleSheet.create({
         fontSize: 12,
         // color: "blue",
     },
+    verse: {
+        marginTop: "5px",
+        width: "90%",
+        alignItems: "center",
+        textAlign: "center",
+        fontSize: 9,
+        // fontStyle: "italic",
+    },
 });
 
 const PDFgenerator = ({ tables }) => (
-    <Document>
+    <Document title="Lista de estudiantes">
         <Page size="A4" style={styles.page} orientation="landscape">
             <View style={styles.allTables}>
                 {tables.map((table, index) => (
                     <View style={styles.tableContainer} wrap={false}>
-                        <Text style={styles.titleTable}>
-                            LISTA DE ASISTENCIA COMEDOR
-                        </Text>
+                        <View style={styles.header}>
+                            <Image
+                                style={styles.image}
+                                src="https://i.ibb.co/ZG89sgg/logo-Colegio-Biblico-Bautista.png"
+                            />
+                            <Text style={styles.title}>
+                                LISTA DE ASISTENCIA COMEDOR
+                            </Text>
+                        </View>
+
                         <View style={styles.headerTable}>
                             <Text>Mesa {index + 1}</Text>
                             <Text>Día________</Text>
                             <Text>Fecha___/___/___/</Text>
+                        </View>
+                        <View style={styles.noteAndSignature}>
+                            <View style={styles.note}>
+                                <Text>
+                                    Cualquier duda o aclaracion con la hna. Lety
+                                    Aponte
+                                </Text>
+                            </View>
+                            <View style={styles.signature}>
+                                <Text>Firma</Text>
+                            </View>
                         </View>
                         <View style={styles.tableContent}>
                             <View style={styles.columnTable}>
@@ -213,11 +286,18 @@ const PDFgenerator = ({ tables }) => (
                                 ))}
                             </View>
                         </View>
+                        <View style={styles.verse}>
+                            <Text>
+                                Si, pues, coméis o bebéis, o hacéis otra cosa,
+                                hacedlo todo para la gloria de Dios
+                            </Text>
+                            <Text>1a de Corintios 10:31</Text>
+                        </View>
                     </View>
                 ))}
             </View>
 
-            <Text break style={styles.title}>
+            <Text break style={styles.titleTable}>
                 Hombres
             </Text>
             <View style={styles.list}>
@@ -241,7 +321,7 @@ const PDFgenerator = ({ tables }) => (
                 ))}
             </View>
 
-            <Text style={styles.title} break>
+            <Text style={styles.titleTable} break>
                 Mujeres
             </Text>
             <View style={styles.list}>
@@ -267,14 +347,5 @@ const PDFgenerator = ({ tables }) => (
         </Page>
     </Document>
 );
-import {
-    Page,
-    Text,
-    View,
-    Document,
-    StyleSheet,
-    PDFViewer,
-    Font,
-} from "@react-pdf/renderer";
 
 export default PDFgenerator;

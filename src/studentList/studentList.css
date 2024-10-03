@@ -4,37 +4,11 @@
 }
 
 .subTitle {
+    font-weight: 600;
     font-size: 1.2rem;
     text-align: center;
     margin-top: 20px;
 }
-
-.rolesBtn {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    
-}
-
-.rolesBtn button {
-    font-weight: bold;
-    background-color: #126fc0;
-    color: aliceblue;
-    border: none;
-    border-radius: 10%;
-    height: 48px;
-    width: 110px;
-    cursor: pointer;
-}
-
-.selectedMenu  {
-    scale: 1.2;
-    background-color: #002e57 !important;
-    border: 2px solid #c3e0ff !important;
-    transition: .2s;
-}
-
 
 .addStudentBtn {
     position: fixed;
@@ -52,56 +26,6 @@
     display: flex;
     justify-content: center;
     cursor: pointer;
-}
-/* 
-table {
-    width: 80vw;
-    max-width:600px;
-    margin: auto;
-    text-align: left;
-    border-spacing: 0;
-    margin-bottom: 80px;
-}
-
-td {
-    padding: 10px;
-}
-
-
-tr:nth-child(even) {background-color: #d9d9d9;} */
-
-.updateStudent {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-}
-
-.tdButtons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 16px;
-}
-
-.deleteBtn {
-    background: url("../icons/delete.png");
-}
-
-.editBtn {
-    background: url("../icons/pen.png") ;
-}
-
-.updateBtn {
-    background: url("../icons/check.png") ;
-}
-
-.deleteBtn,
-.editBtn,
-.updateBtn {
-    border: none;
-    cursor: pointer;
-    width: 20px;
-    height: 20px;
-    background-size: cover;
 }
 
 .overlay-box {
