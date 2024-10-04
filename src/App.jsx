@@ -40,13 +40,18 @@ function App() {
     }
 
     const [students, setStudents] = useState([]);
+    const [tables, setTables] = useState([]);
     const [menuSelection, setMenuSelection] = useState("students");
 
     useEffect(() => {
         const getData = async () => {
             let data = await getStutudentsListData(user);
-            data = JSON.parse(data.studentsList);
-            setStudents(data);
+            const studentsList = JSON.parse(data.studentsList);
+            const studentsTable = data.studentsTable
+                ? JSON.parse(data.studentsTable)
+                : [];
+            setStudents(studentsList);
+            setTables(studentsTable);
         };
         getData();
     }, []);
@@ -60,9 +65,9 @@ function App() {
 
     useEffect(() => {
         if (students.length > 0) {
-            updataStudentsListData(students, user);
+            updataStudentsListData(user, students, tables);
         }
-    }, [students]);
+    }, [students, tables]);
 
     function displayMain() {
         if (menuSelection == "students") {
@@ -71,7 +76,13 @@ function App() {
             );
         }
         if (menuSelection == "shuffle") {
-            return <Shuffle students={students} />;
+            return (
+                <Shuffle
+                    students={students}
+                    tables={tables}
+                    setTables={setTables}
+                />
+            );
         }
         if (menuSelection == "backup") {
             return <BackupData students={students} />;

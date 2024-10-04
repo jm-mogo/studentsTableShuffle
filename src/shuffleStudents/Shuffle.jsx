@@ -4,7 +4,7 @@ import PDFgenerator from "./PDFgenerator.jsx";
 import { TabUnselected } from "@mui/icons-material";
 // import { isCompositeComponent } from "react-dom/test-utils";
 
-function Shuffle({ students }) {
+function Shuffle({ students, tables, setTables }) {
     const Supervisors = students.filter(
         (student) => student.role == "supervisor"
     );
@@ -13,7 +13,7 @@ function Shuffle({ students }) {
     const FemaleStudents = Students.filter((student) => student.gender == "F");
 
     const [ammountOfTables, setAmmountOfTabls] = useState();
-    const [tables, setTables] = useState([]);
+
     const handleChange = (e) => {
         setAmmountOfTabls(e.target.value);
     };

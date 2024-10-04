@@ -29,10 +29,11 @@ const db = getDatabase();
 const dbRef = ref(getDatabase());
 // const dataString = JSON.stringify(data);
 
-export const updataStudentsListData = (newStudentList, user) => {
+export const updataStudentsListData = (user, newStudentList, newTables) => {
     set(ref(db, `Users/${user.uid}`), {
         name: user.displayName,
         studentsList: JSON.stringify(newStudentList),
+        studentsTable: JSON.stringify(newTables),
     });
 };
 
