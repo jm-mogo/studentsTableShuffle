@@ -1,4 +1,4 @@
-import Button from "../ButtonOwn";
+import Button from "../Components/Button/ButtonOwn";
 
 function AddStudentMenu({
     addNewStudent,

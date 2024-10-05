@@ -1,5 +1,4 @@
 import StudentsList from "./studentList/StudentsList.jsx";
-// import Supervisors from "./Supervisors.jsx";
 import { useState, useEffect } from "react";
 import {
     getStutudentsListData,
@@ -7,18 +6,17 @@ import {
 } from "./firebase/firebase.js";
 import Shuffle from "./shuffleStudents/Shuffle.jsx";
 import BackupData from "./backupData/BackupData.jsx";
-import UploadData from "./uploadData/UploadData.jsx";
-import Footer from "./Footer.jsx";
+import ImportData from "./importData/ImportData.jsx";
+import Footer from "./Components/Footer/Footer.jsx";
 import "./App.css";
 import "./studentList/addStudent.css";
 import "./shuffleStudents/Shuffle.css";
 import "./backupData/BackupData.css";
-import "./uploadData/UploadData.css";
+import "./importData/ImportData.css";
 import { useAuth } from "./context/authContext.jsx";
-import { Avatar, Button, Box, IconButton, Menu } from "@mui/material";
+import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import AvatarMenu from "./AvatarMenu.jsx";
-// import { database } from "./firebase/firebase.js";
+import AvatarMenu from "./Components/AvatarMenu/AvatarMenu.jsx";
 
 function App() {
     const { user, logout, loading } = useAuth();
@@ -87,8 +85,8 @@ function App() {
         if (menuSelection == "backup") {
             return <BackupData students={students} />;
         }
-        if (menuSelection == "upload") {
-            return <UploadData students={students} setStudents={setStudents} />;
+        if (menuSelection == "import") {
+            return <ImportData students={students} setStudents={setStudents} />;
         }
     }
 
@@ -142,14 +140,14 @@ function App() {
                         </button>
                         <button
                             className={
-                                menuSelection == "upload" ? "menu-selected" : ""
+                                menuSelection == "import" ? "menu-selected" : ""
                             }
                             onClick={() => {
-                                setMenuSelection("upload");
+                                setMenuSelection("import");
                             }}
                         >
                             {" "}
-                            <span className="icon upload"> </span>Upload backup
+                            <span className="icon import"> </span>Import backup
                         </button>
                     </div>
 

@@ -2,7 +2,7 @@ import { TextField, Box, Button } from "@mui/material";
 import { useState } from "react";
 import { useAuth } from "./context/authContext";
 import { useNavigate, Link } from "react-router-dom";
-import { Alert, Container } from "@mui/material";
+import { Alert } from "@mui/material";
 
 const Register = () => {
     const [user, setUser] = useState({
@@ -25,7 +25,6 @@ const Register = () => {
             await signup(user.email, user.password);
             navigate("/");
         } catch (error) {
-            console.log(error);
             setError(error.message);
         }
     };

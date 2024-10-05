@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import addStudent from "./addStudent.jsx";
+import addStudent from "./addStudent.js";
 import AddStudentMenu from "./AddStudentMenu.jsx";
 import ConfirmationBox from "./ConfirmationBox.jsx";
 import StudentTable from "./StudentTable.jsx";

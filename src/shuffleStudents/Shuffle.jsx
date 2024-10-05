@@ -47,8 +47,6 @@ function Shuffle({ students, tables, setTables }) {
                 }
                 return 0;
             });
-
-            console.log(table);
         });
         // tables.forEach((table) => {
         //     table.sort(function (a, b) {
@@ -104,11 +102,9 @@ function Shuffle({ students, tables, setTables }) {
     };
 
     const moveStudent = (e, studentTable, studentIndex) => {
-        // console.log(e.target.value, studentTable, studentIndex);
         let newTables = [...tables];
         let tableToMove = e.target.value;
         let newStudent = newTables[studentTable].splice(studentIndex, 1);
-        console.log(newStudent[0].role);
         if (newStudent[0].role == "supervisor") {
             let newSupervisor;
             newTables[tableToMove - 1].forEach((student, i) => {

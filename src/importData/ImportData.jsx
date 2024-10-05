@@ -18,7 +18,6 @@ const UploadData = ({ students, setStudents }) => {
 
         keys.forEach((key, i) => {
             keys[i] = key.trim();
-            console.log(key);
         });
 
         const formedArr = rest.map((item) => {

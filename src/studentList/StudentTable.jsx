@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Button from "@mui/material/Button";
-import ButtonOwn from "../ButtonOwn.jsx";
-import AddIcon from "@mui/icons-material/Add";
+import ButtonOwn from "../Components/Button/ButtonOwn.jsx";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
@@ -84,33 +83,6 @@ function AlertDialog({
                 </DialogActions>
             </Dialog>
         </>
-    );
-}
-
-function EditToolbar(props) {
-    const { setStudents, setRowModesModel } = props;
-
-    const handleClick = () => {
-        setStudents((oldRows) => [
-            ...oldRows,
-            { id: oldRows.length, name: "", isNew: true },
-        ]);
-        setRowModesModel((oldModel) => ({
-            ...oldModel,
-            [id]: { mode: GridRowModes.Edit, fieldToFocus: "name" },
-        }));
-    };
-
-    return (
-        <GridToolbarContainer>
-            {/* <Button
-                color="primary"
-                startIcon={<AddIcon />}
-                onClick={handleClick}
-            >
-                Add record
-            </Button> */}
-        </GridToolbarContainer>
     );
 }
 

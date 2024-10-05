@@ -1,5 +1,5 @@
-import deleteStudent from "./deleteStudent";
-import Button from "../ButtonOwn";
+import deleteStudent from "./deleteStudent.js";
+import Button from "../Components/Button/ButtonOwn";
 
 const AskConfirmation = ({
     students,

@@ -2,8 +2,7 @@ import { TextField, Box, Button } from "@mui/material";
 import { useState } from "react";
 import { useAuth } from "./context/authContext";
 import { useNavigate, Link } from "react-router-dom";
-import { Alert, Container, Divider } from "@mui/material";
-import { setUserProperties } from "firebase/analytics";
+import { Alert, Divider } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 const Login = () => {
     const [user, setUser] = useState({
@@ -26,7 +25,6 @@ const Login = () => {
             await login(user.email, user.password);
             navigate("/");
         } catch (error) {
-            console.log(error);
             setError(error.message);
         }
     };
@@ -51,7 +49,6 @@ const Login = () => {
                     width: "100vw",
                     marginTop: "15vh",
                     gap: 8,
-                    // height: "100vh",
                 }}
             >
                 <div
@@ -116,8 +113,6 @@ const Login = () => {
                     >
                         CREATE NEW ACCOUNT
                     </Link>
-
-                    {/* <a href="#!">Forgot password?</a> */}
                 </Box>
             </div>
         </>
