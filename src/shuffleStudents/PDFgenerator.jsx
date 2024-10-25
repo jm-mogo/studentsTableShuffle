@@ -24,7 +24,7 @@ Font.register({
 const styles = StyleSheet.create({
     page: {
         flexDirection: "column",
-        padding: 40,
+        padding: 10,
         fontFamily: "Open Sans",
         // alignItems: "center",
     },
@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
+        marginBottom: 10,
     },
     title: {
         width: "50%",
@@ -66,6 +67,7 @@ const styles = StyleSheet.create({
     noteAndSignature: {
         width: "90%",
         flexDirection: "row",
+        height: 28,
     },
     note: {
         fontSize: 7,
@@ -74,7 +76,7 @@ const styles = StyleSheet.create({
     },
     signature: {
         marginLeft: "3px",
-        width: "152px",
+        width: "164px",
         fontWeight: "bold",
         fontSize: 9,
         textAlign: "center",
@@ -93,7 +95,7 @@ const styles = StyleSheet.create({
     tableContainer: {
         width: "50%",
         alignItems: "center",
-        height: 500,
+        height: 550,
     },
     titleTable: {
         fontSize: 32,
@@ -101,8 +103,8 @@ const styles = StyleSheet.create({
     },
     headerTable: {
         flexDirection: "row",
-        gap: "20",
-        marginBottom: 10,
+        gap: "36",
+        marginBottom: 14,
     },
     tableContent: {
         borderColor: "black",
@@ -118,7 +120,7 @@ const styles = StyleSheet.create({
     rowTable: {
         flexDirection: "row",
         width: "100%",
-        height: 30,
+        height: 60,
         textAlign: "left",
         // alignContent: "center",
         borderColor: "black",
@@ -205,6 +207,7 @@ const styles = StyleSheet.create({
     verse: {
         marginTop: "5px",
         width: "90%",
+        gap: 6,
         alignItems: "center",
         textAlign: "center",
         fontSize: 9,
