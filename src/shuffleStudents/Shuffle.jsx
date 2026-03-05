@@ -2,7 +2,6 @@ import { useState } from "react";
 import { PDFViewer } from "@react-pdf/renderer";
 import PDFgenerator from "./PDFgenerator.jsx";
 import { TabUnselected } from "@mui/icons-material";
-// import { isCompositeComponent } from "react-dom/test-utils";
 
 function Shuffle({ students, tables, setTables }) {
 	const Supervisors = students.filter(
@@ -14,7 +13,7 @@ function Shuffle({ students, tables, setTables }) {
 
 	const [ammountOfTables, setAmmountOfTabls] = useState();
 
-	// NEW STATE: Holds the data for our visual test report modal
+	// State to hold the data for our visual test report modal
 	const [testResults, setTestResults] = useState(null);
 
 	const handleChange = (e) => {
@@ -169,8 +168,6 @@ function Shuffle({ students, tables, setTables }) {
 					testSupervisors.shift(),
 				);
 
-			// No need to sort visually for the backend test
-
 			// Analyze the tables for this run
 			testTables.forEach((table) => {
 				for (let i = 0; i < table.length; i++) {
@@ -209,14 +206,36 @@ function Shuffle({ students, tables, setTables }) {
 				<PDFgenerator tables={tables} />
 			</PDFViewer>
 			<h1>There are {Supervisors.length} supervisors</h1>
-			<div className="input-tables-section">
-				<label htmlFor="">Ammount of tables</label>
+
+			{/* UPDATED INPUT SECTION WITH BOTH BUTTONS */}
+			<div
+				className="input-tables-section"
+				style={{ marginBottom: "20px" }}
+			>
+				<label htmlFor="">Amount of tables: </label>
 				<input
 					type="number"
 					onChange={handleChange}
 					value={ammountOfTables}
+					style={{ marginRight: "10px" }}
 				/>
 				<button onClick={shuffleStudents}>Shuffle</button>
+
+				{/* THE TEST BUTTON PLACED RIGHT NEXT TO SHUFFLE */}
+				<button
+					onClick={testShuffle}
+					style={{
+						marginLeft: "15px",
+						backgroundColor: "#28a745",
+						color: "white",
+						padding: "3px 12px",
+						cursor: "pointer",
+						borderRadius: "4px",
+						border: "1px solid #1e7e34",
+					}}
+				>
+					Test Randomness (100x)
+				</button>
 			</div>
 
 			<div className="tables-section">
@@ -324,40 +343,6 @@ function Shuffle({ students, tables, setTables }) {
 				))}
 			</div>
 
-			{/* DEVELOPER TOOLS BUTTON */}
-			<div
-				style={{
-					marginTop: "50px",
-					padding: "20px",
-					borderTop: "2px solid #ccc",
-					textAlign: "center",
-				}}
-			>
-				<h3>Developer Tools</h3>
-				<button
-					onClick={testShuffle}
-					style={{
-						backgroundColor: "black",
-						color: "white",
-						padding: "10px 20px",
-						cursor: "pointer",
-						borderRadius: "5px",
-					}}
-				>
-					Run 100x Randomness Test
-				</button>
-				<p
-					style={{
-						fontSize: "12px",
-						color: "gray",
-						marginTop: "10px",
-					}}
-				>
-					This simulates 100 weeks of dining and generates a
-					statistical report.
-				</p>
-			</div>
-
 			{/* TEST RESULTS MODAL */}
 			{testResults && (
 				<div
@@ -384,6 +369,7 @@ function Shuffle({ students, tables, setTables }) {
 							maxHeight: "85vh",
 							overflowY: "auto",
 							boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+							color: "black",
 						}}
 					>
 						<h2
@@ -420,7 +406,13 @@ function Shuffle({ students, tables, setTables }) {
 							>
 								<strong>Statistical Expectation:</strong>
 							</p>
-							<p style={{ margin: 0, fontSize: "14px" }}>
+							<p
+								style={{
+									margin: 0,
+									fontSize: "14px",
+									color: "#333",
+								}}
+							>
 								By pure mathematical chance, any two specific
 								students should sit at the same table
 								approximately{" "}
@@ -447,11 +439,12 @@ function Shuffle({ students, tables, setTables }) {
 								borderBottom: "1px solid #ccc",
 								paddingBottom: "5px",
 								marginTop: "25px",
+								color: "#333",
 							}}
 						>
 							Top 10 Most Frequent Pairs
 						</h3>
-						<ul style={{ paddingLeft: "20px" }}>
+						<ul style={{ paddingLeft: "20px", color: "#444" }}>
 							{testResults.top10.map(([pair, count], index) => (
 								<li key={index} style={{ marginBottom: "8px" }}>
 									{pair}: <strong>{count}</strong> times
