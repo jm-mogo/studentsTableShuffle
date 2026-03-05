@@ -53,21 +53,27 @@ function Shuffle({ students, tables, setTables }) {
 	};
 
 	const shuffleStudents = () => {
+		// Safely parse the input value to an integer
+		const numTables = parseInt(ammountOfTables, 10);
+
+		// Guard clause: Prevent crashing if the user clicks shuffle when input is empty or 0
+		if (!numTables || numTables <= 0) {
+			alert("Please enter a valid amount of tables.");
+			return;
+		}
+
 		// Shuffle the groups individually
 		shuffle(MaleStudents);
 		shuffle(FemaleStudents);
 		shuffle(Supervisors);
 
 		let newTables = [];
-		for (let i = 0; i < ammountOfTables; i++) {
+		for (let i = 0; i < numTables; i++) {
 			newTables.push([]);
 		}
 
-		// Create a base array of all table indices [0, 1, 2, ..., ammountOfTables - 1]
-		const baseTableIndices = Array.from(
-			{ length: ammountOfTables },
-			(_, i) => i,
-		);
+		// Create a base array of all table indices [0, 1, 2, ..., numTables - 1]
+		const baseTableIndices = Array.from({ length: numTables }, (_, i) => i);
 		let indexPool = [...baseTableIndices];
 
 		// Initial shuffle of the table order
@@ -140,11 +146,11 @@ function Shuffle({ students, tables, setTables }) {
 
 			<div className="tables-section">
 				{tables.map((table, i) => (
-					<div>
+					<div key={i}>
 						<h1>table {i + 1}</h1>
 						<ol className="table">
 							{table.map((student, studentIndex) => (
-								<>
+								<div key={studentIndex}>
 									{student.role == "supervisor" ? (
 										<li className="tableData">
 											<b>
@@ -168,6 +174,7 @@ function Shuffle({ students, tables, setTables }) {
 													{tables.map(
 														(value, index) => (
 															<option
+																key={index}
 																selected={
 																	i ==
 																		index &&
@@ -213,6 +220,7 @@ function Shuffle({ students, tables, setTables }) {
 													{tables.map(
 														(value, index) => (
 															<option
+																key={index}
 																selected={
 																	i ==
 																		index &&
@@ -236,7 +244,7 @@ function Shuffle({ students, tables, setTables }) {
 											</div>
 										</li>
 									)}
-								</>
+								</div>
 							))}
 						</ol>
 					</div>
