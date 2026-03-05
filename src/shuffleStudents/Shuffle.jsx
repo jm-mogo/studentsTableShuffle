@@ -219,7 +219,7 @@ function Shuffle({ students, tables, setTables }) {
 					value={ammountOfTables}
 					style={{ marginRight: "10px" }}
 				/>
-				<button onClick={shuffleStudents}>Shuffle</button>
+				<button onClick={shuffleStudents}>Shuffle students</button>
 
 				{/* THE TEST BUTTON PLACED RIGHT NEXT TO SHUFFLE */}
 				<button
