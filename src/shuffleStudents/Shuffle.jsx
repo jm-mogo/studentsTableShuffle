@@ -5,245 +5,245 @@ import { TabUnselected } from "@mui/icons-material";
 // import { isCompositeComponent } from "react-dom/test-utils";
 
 function Shuffle({ students, tables, setTables }) {
-    const Supervisors = students.filter(
-        (student) => student.role == "supervisor"
-    );
-    const Students = students.filter((student) => student.role == "student");
-    const MaleStudents = Students.filter((student) => student.gender == "M");
-    const FemaleStudents = Students.filter((student) => student.gender == "F");
+	const Supervisors = students.filter(
+		(student) => student.role == "supervisor",
+	);
+	const Students = students.filter((student) => student.role == "student");
+	const MaleStudents = Students.filter((student) => student.gender == "M");
+	const FemaleStudents = Students.filter((student) => student.gender == "F");
 
-    const [ammountOfTables, setAmmountOfTabls] = useState();
+	const [ammountOfTables, setAmmountOfTabls] = useState();
 
-    const handleChange = (e) => {
-        setAmmountOfTabls(e.target.value);
-    };
+	const handleChange = (e) => {
+		setAmmountOfTabls(e.target.value);
+	};
 
-    const shuffle = (array) => {
-        for (let i = array.length - 1; i > 0; i--) {
-            const arrayBuffer = new Uint32Array(1);
-            window.crypto.getRandomValues(arrayBuffer);
-            const j = arrayBuffer[0] % (i + 1);
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-    };
+	const shuffle = (array) => {
+		for (let i = array.length - 1; i > 0; i--) {
+			const arrayBuffer = new Uint32Array(1);
+			window.crypto.getRandomValues(arrayBuffer);
+			const j = arrayBuffer[0] % (i + 1);
+			[array[i], array[j]] = [array[j], array[i]];
+		}
+		return array;
+	};
 
-    const sortTablesByGender = (tables) => {
-        tables.forEach((table) => {
-            table.sort(function (a, b) {
-                if (a.name < b.name) {
-                    return -1;
-                }
-                if (b.name > a.name) {
-                    return 1;
-                }
-                return 0;
-            });
+	const sortTablesByGender = (tables) => {
+		tables.forEach((table) => {
+			table.sort(function (a, b) {
+				if (a.name < b.name) {
+					return -1;
+				}
+				if (b.name > a.name) {
+					return 1;
+				}
+				return 0;
+			});
 
-            table.sort(function (a, b) {
-                if (a.gender > b.gender) {
-                    return -1;
-                }
-                if (b.gender < a.gender) {
-                    return 0;
-                }
-                return 0;
-            });
-        });
-        // tables.forEach((table) => {
-        //     table.sort(function (a, b) {
-        //         if (a.gender > b.gender) {
-        //             return -1;
-        //         }
-        //         if (b.gender < a.gender) {
-        //             return 0;
-        //         }
-        //         return 0;
-        //     });
-        // });
-    };
+			table.sort(function (a, b) {
+				if (a.gender > b.gender) {
+					return -1;
+				}
+				if (b.gender < a.gender) {
+					return 0;
+				}
+				return 0;
+			});
+		});
+	};
 
-    const shuffleStudents = () => {
-        shuffle(MaleStudents);
-        shuffle(FemaleStudents);
-        shuffle(Supervisors);
-        let newTables = [];
-        for (let i = 0; i < ammountOfTables; i++) {
-            newTables.push([]);
-        }
-        let i = 0;
-        while (MaleStudents.length > 0) {
-            newTables[i].push(MaleStudents.shift());
+	const shuffleStudents = () => {
+		// Shuffle the groups individually
+		shuffle(MaleStudents);
+		shuffle(FemaleStudents);
+		shuffle(Supervisors);
 
-            if (i >= newTables.length - 1) {
-                i = 0;
-            } else {
-                i++;
-            }
-        }
-        while (FemaleStudents.length > 0) {
-            newTables[i].push(FemaleStudents.shift());
+		let newTables = [];
+		for (let i = 0; i < ammountOfTables; i++) {
+			newTables.push([]);
+		}
 
-            if (i >= newTables.length - 1) {
-                i = 0;
-            } else {
-                i++;
-            }
-        }
-        while (Supervisors.length > 0) {
-            newTables[i].push(Supervisors.shift());
+		// Create a base array of all table indices [0, 1, 2, ..., ammountOfTables - 1]
+		const baseTableIndices = Array.from(
+			{ length: ammountOfTables },
+			(_, i) => i,
+		);
+		let indexPool = [...baseTableIndices];
 
-            if (i >= newTables.length - 1) {
-                i = 0;
-            } else {
-                i++;
-            }
-        }
-        sortTablesByGender(newTables);
-        setTables(newTables);
-    };
+		// Initial shuffle of the table order
+		shuffle(indexPool);
 
-    const moveStudent = (e, studentTable, studentIndex) => {
-        let newTables = [...tables];
-        let tableToMove = e.target.value;
-        let newStudent = newTables[studentTable].splice(studentIndex, 1);
-        if (newStudent[0].role == "supervisor") {
-            let newSupervisor;
-            newTables[tableToMove - 1].forEach((student, i) => {
-                if (student.role == "supervisor") {
-                    newSupervisor = newTables[tableToMove - 1].splice(i, 1);
-                    newTables[studentTable].unshift(...newSupervisor);
-                }
-            });
-        }
-        newTables[tableToMove - 1].unshift(...newStudent);
-        e.target.value = studentTable + 1;
-        sortTablesByGender(newTables);
-        setTables(newTables);
-    };
+		// Helper function to get the next random table, guaranteeing balanced table sizes
+		const getNextRandomTableIndex = () => {
+			if (indexPool.length === 0) {
+				// When every table has received a student, refill the pool and shuffle again
+				indexPool = [...baseTableIndices];
+				shuffle(indexPool);
+			}
+			return indexPool.shift(); // Remove and return the first random index
+		};
 
-    return (
-        <>
-            <PDFViewer>
-                <PDFgenerator tables={tables} />
-            </PDFViewer>
-            <h1>There are {Supervisors.length} supervisors</h1>
-            <div className="input-tables-section">
-                <label htmlFor="">Ammount of tables</label>
-                <input
-                    type="number"
-                    onChange={handleChange}
-                    value={ammountOfTables}
-                />
-                <button onClick={shuffleStudents}>Shuffle</button>
-            </div>
+		// Distribute Male Students using the random table pool
+		while (MaleStudents.length > 0) {
+			newTables[getNextRandomTableIndex()].push(MaleStudents.shift());
+		}
 
-            <div className="tables-section">
-                {tables.map((table, i) => (
-                    <div>
-                        <h1>table {i + 1}</h1>
-                        <ol className="table">
-                            {table.map((student, studentIndex) => (
-                                <>
-                                    {student.role == "supervisor" ? (
-                                        <li className="tableData">
-                                            <b>
-                                                {studentIndex +
-                                                    1 +
-                                                    ". " +
-                                                    student.name}{" "}
-                                            </b>
-                                            <div>
-                                                <select
-                                                    name="table"
-                                                    id="table"
-                                                    onChange={(e) => {
-                                                        moveStudent(
-                                                            e,
-                                                            i,
-                                                            studentIndex
-                                                        );
-                                                    }}
-                                                >
-                                                    {tables.map(
-                                                        (value, index) => (
-                                                            <option
-                                                                selected={
-                                                                    i ==
-                                                                        index &&
-                                                                    true
-                                                                }
-                                                            >
-                                                                {index + 1}
-                                                            </option>
-                                                        )
-                                                    )}
-                                                </select>
-                                                <span
-                                                    className={
-                                                        student.gender == "M"
-                                                            ? "boy"
-                                                            : "girl"
-                                                    }
-                                                >
-                                                    {" " + "O"}
-                                                </span>
-                                            </div>
-                                        </li>
-                                    ) : (
-                                        <li className="tableData">
-                                            <p>
-                                                {studentIndex +
-                                                    1 +
-                                                    ". " +
-                                                    student.name}
-                                            </p>
-                                            <div>
-                                                <select
-                                                    name="table"
-                                                    id="table"
-                                                    onChange={(e) => {
-                                                        moveStudent(
-                                                            e,
-                                                            i,
-                                                            studentIndex
-                                                        );
-                                                    }}
-                                                >
-                                                    {tables.map(
-                                                        (value, index) => (
-                                                            <option
-                                                                selected={
-                                                                    i ==
-                                                                        index &&
-                                                                    true
-                                                                }
-                                                            >
-                                                                {index + 1}
-                                                            </option>
-                                                        )
-                                                    )}
-                                                </select>
-                                                <span
-                                                    className={
-                                                        student.gender == "M"
-                                                            ? "boy"
-                                                            : "girl"
-                                                    }
-                                                >
-                                                    {" " + "O"}
-                                                </span>
-                                            </div>
-                                        </li>
-                                    )}
-                                </>
-                            ))}
-                        </ol>
-                    </div>
-                ))}
-            </div>
-        </>
-    );
+		// Continue distributing Female Students picking up exactly where the pool left off
+		while (FemaleStudents.length > 0) {
+			newTables[getNextRandomTableIndex()].push(FemaleStudents.shift());
+		}
+
+		// Continue distributing Supervisors picking up exactly where the pool left off
+		while (Supervisors.length > 0) {
+			newTables[getNextRandomTableIndex()].push(Supervisors.shift());
+		}
+
+		// Apply final required sorting
+		sortTablesByGender(newTables);
+		setTables(newTables);
+	};
+
+	const moveStudent = (e, studentTable, studentIndex) => {
+		let newTables = [...tables];
+		let tableToMove = e.target.value;
+		let newStudent = newTables[studentTable].splice(studentIndex, 1);
+		if (newStudent[0].role == "supervisor") {
+			let newSupervisor;
+			newTables[tableToMove - 1].forEach((student, i) => {
+				if (student.role == "supervisor") {
+					newSupervisor = newTables[tableToMove - 1].splice(i, 1);
+					newTables[studentTable].unshift(...newSupervisor);
+				}
+			});
+		}
+		newTables[tableToMove - 1].unshift(...newStudent);
+		e.target.value = studentTable + 1;
+		sortTablesByGender(newTables);
+		setTables(newTables);
+	};
+
+	return (
+		<>
+			<PDFViewer>
+				<PDFgenerator tables={tables} />
+			</PDFViewer>
+			<h1>There are {Supervisors.length} supervisors</h1>
+			<div className="input-tables-section">
+				<label htmlFor="">Ammount of tables</label>
+				<input
+					type="number"
+					onChange={handleChange}
+					value={ammountOfTables}
+				/>
+				<button onClick={shuffleStudents}>Shuffle</button>
+			</div>
+
+			<div className="tables-section">
+				{tables.map((table, i) => (
+					<div>
+						<h1>table {i + 1}</h1>
+						<ol className="table">
+							{table.map((student, studentIndex) => (
+								<>
+									{student.role == "supervisor" ? (
+										<li className="tableData">
+											<b>
+												{studentIndex +
+													1 +
+													". " +
+													student.name}{" "}
+											</b>
+											<div>
+												<select
+													name="table"
+													id="table"
+													onChange={(e) => {
+														moveStudent(
+															e,
+															i,
+															studentIndex,
+														);
+													}}
+												>
+													{tables.map(
+														(value, index) => (
+															<option
+																selected={
+																	i ==
+																		index &&
+																	true
+																}
+															>
+																{index + 1}
+															</option>
+														),
+													)}
+												</select>
+												<span
+													className={
+														student.gender == "M"
+															? "boy"
+															: "girl"
+													}
+												>
+													{" " + "O"}
+												</span>
+											</div>
+										</li>
+									) : (
+										<li className="tableData">
+											<p>
+												{studentIndex +
+													1 +
+													". " +
+													student.name}
+											</p>
+											<div>
+												<select
+													name="table"
+													id="table"
+													onChange={(e) => {
+														moveStudent(
+															e,
+															i,
+															studentIndex,
+														);
+													}}
+												>
+													{tables.map(
+														(value, index) => (
+															<option
+																selected={
+																	i ==
+																		index &&
+																	true
+																}
+															>
+																{index + 1}
+															</option>
+														),
+													)}
+												</select>
+												<span
+													className={
+														student.gender == "M"
+															? "boy"
+															: "girl"
+													}
+												>
+													{" " + "O"}
+												</span>
+											</div>
+										</li>
+									)}
+								</>
+							))}
+						</ol>
+					</div>
+				))}
+			</div>
+		</>
+	);
 }
 
 export default Shuffle;
