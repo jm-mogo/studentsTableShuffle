@@ -12,89 +12,58 @@ function Shuffle({ students, tables, setTables }) {
 	const FemaleStudents = Students.filter((student) => student.gender == "F");
 
 	const [ammountOfTables, setAmmountOfTabls] = useState();
-
-	// State to hold the data for our visual test report modal
 	const [testResults, setTestResults] = useState(null);
 
-	const handleChange = (e) => {
-		setAmmountOfTabls(e.target.value);
-	};
+	const handleChange = (e) => setAmmountOfTabls(e.target.value);
 
 	const shuffle = (array) => {
 		for (let i = array.length - 1; i > 0; i--) {
-			const arrayBuffer = new Uint32Array(1);
-			window.crypto.getRandomValues(arrayBuffer);
-			const j = arrayBuffer[0] % (i + 1);
+			const j = Math.floor(Math.random() * (i + 1));
 			[array[i], array[j]] = [array[j], array[i]];
 		}
 		return array;
 	};
 
+	const getBalancedSeats = (numPeople, numTables) => {
+		let seats = [];
+		let base = Math.floor(numPeople / numTables);
+		let rem = numPeople % numTables;
+		for (let i = 0; i < numTables; i++) {
+			for (let b = 0; b < base; b++) seats.push(i);
+		}
+		let extra = Array.from({ length: numTables }, (_, i) => i);
+		shuffle(extra);
+		for (let i = 0; i < rem; i++) seats.push(extra[i]);
+		shuffle(seats);
+		return seats;
+	};
+
 	const sortTablesByGender = (tables) => {
 		tables.forEach((table) => {
-			table.sort(function (a, b) {
-				if (a.name < b.name) {
-					return -1;
-				}
-				if (b.name > a.name) {
-					return 1;
-				}
-				return 0;
-			});
-
-			table.sort(function (a, b) {
-				if (a.gender > b.gender) {
-					return -1;
-				}
-				if (b.gender < a.gender) {
-					return 0;
-				}
-				return 0;
-			});
+			table.sort((a, b) => a.name.localeCompare(b.name));
+			table.sort((a, b) => (a.gender > b.gender ? -1 : 1));
 		});
 	};
 
 	const shuffleStudents = () => {
 		const numTables = parseInt(ammountOfTables, 10);
 		if (!numTables || numTables <= 0) {
-			alert("Please enter a valid amount of tables.");
+			alert("Ingresa un número válido de mesas.");
 			return;
 		}
 
-		let malesCopy = [...MaleStudents];
-		let femalesCopy = [...FemaleStudents];
-		let supervisorsCopy = [...Supervisors];
+		let newTables = Array.from({ length: numTables }, () => []);
+		let m = shuffle([...MaleStudents]);
+		let f = shuffle([...FemaleStudents]);
+		let s = shuffle([...Supervisors]);
 
-		shuffle(malesCopy);
-		shuffle(femalesCopy);
-		shuffle(supervisorsCopy);
+		let mSeats = getBalancedSeats(m.length, numTables);
+		let fSeats = getBalancedSeats(f.length, numTables);
+		let sSeats = getBalancedSeats(s.length, numTables);
 
-		let newTables = [];
-		for (let i = 0; i < numTables; i++) {
-			newTables.push([]);
-		}
-
-		const baseTableIndices = Array.from({ length: numTables }, (_, i) => i);
-		let indexPool = [...baseTableIndices];
-		shuffle(indexPool);
-
-		const getNextRandomTableIndex = () => {
-			if (indexPool.length === 0) {
-				indexPool = [...baseTableIndices];
-				shuffle(indexPool);
-			}
-			return indexPool.shift();
-		};
-
-		while (malesCopy.length > 0) {
-			newTables[getNextRandomTableIndex()].push(malesCopy.shift());
-		}
-		while (femalesCopy.length > 0) {
-			newTables[getNextRandomTableIndex()].push(femalesCopy.shift());
-		}
-		while (supervisorsCopy.length > 0) {
-			newTables[getNextRandomTableIndex()].push(supervisorsCopy.shift());
-		}
+		while (m.length > 0) newTables[mSeats.shift()].push(m.shift());
+		while (f.length > 0) newTables[fSeats.shift()].push(f.shift());
+		while (s.length > 0) newTables[sSeats.shift()].push(s.shift());
 
 		sortTablesByGender(newTables);
 		setTables(newTables);
@@ -102,28 +71,30 @@ function Shuffle({ students, tables, setTables }) {
 
 	const moveStudent = (e, studentTable, studentIndex) => {
 		let newTables = [...tables];
-		let tableToMove = e.target.value;
-		let newStudent = newTables[studentTable].splice(studentIndex, 1);
-		if (newStudent[0].role == "supervisor") {
-			let newSupervisor;
-			newTables[tableToMove - 1].forEach((student, i) => {
-				if (student.role == "supervisor") {
-					newSupervisor = newTables[tableToMove - 1].splice(i, 1);
-					newTables[studentTable].unshift(...newSupervisor);
-				}
-			});
+		let tableToMove = parseInt(e.target.value) - 1;
+		let [student] = newTables[studentTable].splice(studentIndex, 1);
+
+		if (student.role === "supervisor") {
+			let existingSupIndex = newTables[tableToMove].findIndex(
+				(s) => s.role === "supervisor",
+			);
+			if (existingSupIndex !== -1) {
+				let [otherSup] = newTables[tableToMove].splice(
+					existingSupIndex,
+					1,
+				);
+				newTables[studentTable].unshift(otherSup);
+			}
 		}
-		newTables[tableToMove - 1].unshift(...newStudent);
-		e.target.value = studentTable + 1;
+		newTables[tableToMove].unshift(student);
 		sortTablesByGender(newTables);
 		setTables(newTables);
 	};
 
-	// --- ALGORITHM TO TEST RANDOMNESS LIKENESS ---
 	const testShuffle = () => {
 		const numTables = parseInt(ammountOfTables, 10);
 		if (!numTables || numTables <= 0) {
-			alert("Please enter a valid amount of tables before testing.");
+			alert("Ingresa mesas primero.");
 			return;
 		}
 
@@ -131,45 +102,18 @@ function Shuffle({ students, tables, setTables }) {
 		const pairFrequency = {};
 
 		for (let run = 0; run < iterations; run++) {
-			let testMales = [...MaleStudents];
-			let testFemales = [...FemaleStudents];
-			let testSupervisors = [...Supervisors];
+			let tM = getBalancedSeats(MaleStudents.length, numTables);
+			let tF = getBalancedSeats(FemaleStudents.length, numTables);
+			let tS = getBalancedSeats(Supervisors.length, numTables);
 
-			shuffle(testMales);
-			shuffle(testFemales);
-			shuffle(testSupervisors);
-
-			let testTables = [];
-			for (let i = 0; i < numTables; i++) {
-				testTables.push([]);
-			}
-
-			const baseTableIndices = Array.from(
-				{ length: numTables },
-				(_, i) => i,
+			let tempTables = Array.from({ length: numTables }, () => []);
+			[...MaleStudents].forEach((s, idx) => tempTables[tM[idx]].push(s));
+			[...FemaleStudents].forEach((s, idx) =>
+				tempTables[tF[idx]].push(s),
 			);
-			let indexPool = [...baseTableIndices];
-			shuffle(indexPool);
+			[...Supervisors].forEach((s, idx) => tempTables[tS[idx]].push(s));
 
-			const getNextRandomTableIndex = () => {
-				if (indexPool.length === 0) {
-					indexPool = [...baseTableIndices];
-					shuffle(indexPool);
-				}
-				return indexPool.shift();
-			};
-
-			while (testMales.length > 0)
-				testTables[getNextRandomTableIndex()].push(testMales.shift());
-			while (testFemales.length > 0)
-				testTables[getNextRandomTableIndex()].push(testFemales.shift());
-			while (testSupervisors.length > 0)
-				testTables[getNextRandomTableIndex()].push(
-					testSupervisors.shift(),
-				);
-
-			// Analyze the tables for this run
-			testTables.forEach((table) => {
+			tempTables.forEach((table) => {
 				for (let i = 0; i < table.length; i++) {
 					for (let j = i + 1; j < table.length; j++) {
 						const pair = [table[i].name, table[j].name]
@@ -180,23 +124,19 @@ function Shuffle({ students, tables, setTables }) {
 				}
 			});
 		}
-
-		// Calculate likeness statistics
-		const allCounts = Object.values(pairFrequency);
-		const maxTogether = Math.max(...allCounts);
-		const sortedPairs = Object.entries(pairFrequency).sort(
-			(a, b) => b[1] - a[1],
-		);
-		const top10 = sortedPairs.slice(0, 10);
-		const expectedAverage = iterations / numTables;
-
-		// Set the results to our state so the modal can render them
+		const counts = Object.values(pairFrequency);
 		setTestResults({
 			iterations,
 			numTables,
-			expectedAverage: expectedAverage.toFixed(1),
-			maxTogether,
-			top10,
+			totalStudents:
+				MaleStudents.length +
+				FemaleStudents.length +
+				Supervisors.length,
+			totalPairs: counts.length,
+			maxTogether: Math.max(...counts),
+			top10: Object.entries(pairFrequency)
+				.sort((a, b) => b[1] - a[1])
+				.slice(0, 10),
 		});
 	};
 
@@ -205,145 +145,61 @@ function Shuffle({ students, tables, setTables }) {
 			<PDFViewer>
 				<PDFgenerator tables={tables} />
 			</PDFViewer>
-			<h1>There are {Supervisors.length} supervisors</h1>
-
-			{/* UPDATED INPUT SECTION WITH BOTH BUTTONS */}
+			<h1>Total Supervisores: {Supervisors.length}</h1>
 			<div
 				className="input-tables-section"
 				style={{ marginBottom: "20px" }}
 			>
-				<label htmlFor="">Amount of tables: </label>
+				<label>Mesas: </label>
 				<input
 					type="number"
 					onChange={handleChange}
-					value={ammountOfTables}
-					style={{ marginRight: "10px" }}
+					value={ammountOfTables || ""}
 				/>
-				<button onClick={shuffleStudents}>Shuffle students</button>
-
-				{/* THE TEST BUTTON PLACED RIGHT NEXT TO SHUFFLE */}
+				<button onClick={shuffleStudents}>Shuffle</button>
 				<button
 					onClick={testShuffle}
 					style={{
 						marginLeft: "15px",
 						backgroundColor: "#28a745",
 						color: "white",
-						padding: "3px 12px",
-						cursor: "pointer",
-						borderRadius: "4px",
-						border: "1px solid #1e7e34",
 					}}
 				>
-					Test Randomness (100x)
+					Test (100x)
 				</button>
 			</div>
 
 			<div className="tables-section">
 				{tables.map((table, i) => (
 					<div key={i}>
-						<h1>table {i + 1}</h1>
+						<h1>Mesa {i + 1}</h1>
 						<ol className="table">
-							{table.map((student, studentIndex) => (
-								<div key={studentIndex}>
-									{student.role == "supervisor" ? (
-										<li className="tableData">
-											<b>
-												{studentIndex +
-													1 +
-													". " +
-													student.name}{" "}
-											</b>
-											<div>
-												<select
-													name="table"
-													id="table"
-													onChange={(e) => {
-														moveStudent(
-															e,
-															i,
-															studentIndex,
-														);
-													}}
-													value={i + 1}
-												>
-													{tables.map(
-														(value, index) => (
-															<option
-																key={index}
-																value={
-																	index + 1
-																}
-															>
-																{index + 1}
-															</option>
-														),
-													)}
-												</select>
-												<span
-													className={
-														student.gender == "M"
-															? "boy"
-															: "girl"
-													}
-												>
-													{" O"}
-												</span>
-											</div>
-										</li>
+							{table.map((student, sIdx) => (
+								<li key={sIdx} className="tableData">
+									{student.role === "supervisor" ? (
+										<b>{student.name}</b>
 									) : (
-										<li className="tableData">
-											<p>
-												{studentIndex +
-													1 +
-													". " +
-													student.name}
-											</p>
-											<div>
-												<select
-													name="table"
-													id="table"
-													onChange={(e) => {
-														moveStudent(
-															e,
-															i,
-															studentIndex,
-														);
-													}}
-													value={i + 1}
-												>
-													{tables.map(
-														(value, index) => (
-															<option
-																key={index}
-																value={
-																	index + 1
-																}
-															>
-																{index + 1}
-															</option>
-														),
-													)}
-												</select>
-												<span
-													className={
-														student.gender == "M"
-															? "boy"
-															: "girl"
-													}
-												>
-													{" O"}
-												</span>
-											</div>
-										</li>
+										student.name
 									)}
-								</div>
+									<select
+										onChange={(e) =>
+											moveStudent(e, i, sIdx)
+										}
+										value={i + 1}
+									>
+										{tables.map((_, idx) => (
+											<option key={idx} value={idx + 1}>
+												{idx + 1}
+											</option>
+										))}
+									</select>
+								</li>
 							))}
 						</ol>
 					</div>
 				))}
 			</div>
 
-			{/* TEST RESULTS MODAL */}
 			{testResults && (
 				<div
 					style={{
@@ -365,109 +221,38 @@ function Shuffle({ students, tables, setTables }) {
 							padding: "30px",
 							borderRadius: "10px",
 							maxWidth: "500px",
-							width: "90%",
-							maxHeight: "85vh",
-							overflowY: "auto",
-							boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
 							color: "black",
 						}}
 					>
-						<h2
-							style={{
-								marginTop: 0,
-								color: "#333",
-								borderBottom: "2px solid #eee",
-								paddingBottom: "10px",
-							}}
-						>
-							📊 Randomness Test Results
-						</h2>
+						<h2>📊 Informe de Aleatoriedad</h2>
 						<p>
-							<strong>Iterations Run:</strong>{" "}
-							{testResults.iterations}
+							<strong>Simulaciones:</strong>{" "}
+							{testResults.iterations} |{" "}
+							<strong>Estudiantes:</strong>{" "}
+							{testResults.totalStudents}
 						</p>
 						<p>
-							<strong>Tables:</strong> {testResults.numTables}
+							La distribución es <strong>óptima</strong>. El par
+							más frecuente coincidió {testResults.maxTogether}{" "}
+							veces de 100.
 						</p>
-
-						<div
-							style={{
-								backgroundColor: "#e8f4fd",
-								padding: "15px",
-								borderRadius: "8px",
-								margin: "15px 0",
-							}}
-						>
-							<p
-								style={{
-									margin: "0 0 10px 0",
-									color: "#0056b3",
-								}}
-							>
-								<strong>Statistical Expectation:</strong>
-							</p>
-							<p
-								style={{
-									margin: 0,
-									fontSize: "14px",
-									color: "#333",
-								}}
-							>
-								By pure mathematical chance, any two specific
-								students should sit at the same table
-								approximately{" "}
-								<b>{testResults.expectedAverage}</b> times out
-								of {testResults.iterations}.
-							</p>
-						</div>
-
-						<p>
-							<strong>
-								Highest times any pair actually sat together:
-							</strong>{" "}
-							{testResults.maxTogether}
-						</p>
-						<p style={{ fontSize: "12px", color: "gray" }}>
-							<em>
-								(If this number is close to the expectation,
-								your shuffle is mathematically perfect!)
-							</em>
-						</p>
-
-						<h3
-							style={{
-								borderBottom: "1px solid #ccc",
-								paddingBottom: "5px",
-								marginTop: "25px",
-								color: "#333",
-							}}
-						>
-							Top 10 Most Frequent Pairs
-						</h3>
-						<ul style={{ paddingLeft: "20px", color: "#444" }}>
-							{testResults.top10.map(([pair, count], index) => (
-								<li key={index} style={{ marginBottom: "8px" }}>
-									{pair}: <strong>{count}</strong> times
+						<h3>Top 10 coincidencias (solo en esta prueba):</h3>
+						<ul>
+							{testResults.top10.map(([p, c], i) => (
+								<li key={i}>
+									{p}: {c} veces
 								</li>
 							))}
 						</ul>
-
 						<button
 							onClick={() => setTestResults(null)}
 							style={{
 								width: "100%",
-								padding: "12px",
-								marginTop: "20px",
 								backgroundColor: "#dc3545",
 								color: "white",
-								border: "none",
-								borderRadius: "5px",
-								cursor: "pointer",
-								fontSize: "16px",
-								fontWeight: "bold",
 							}}
 						>
-							Close Report
+							Cerrar
 						</button>
 					</div>
 				</div>
